@@ -80,4 +80,7 @@ dependencies {
     // LottieFiles
     val lottieVersion = "4.2.0"
     implementation ("com.airbnb.android:lottie-compose:$lottieVersion")
+
+    //Pager
+    implementation ("com.google.accompanist:accompanist-pager:0.12.0")
 }
