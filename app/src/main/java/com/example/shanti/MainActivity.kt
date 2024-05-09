@@ -19,6 +19,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shanti.navigation.graph.Graph
+import com.example.shanti.navigation.host.RootNavHost
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.presentation.signin.SignInScreen
 import com.example.shanti.presentation.signin.SignInViewModel
@@ -44,7 +46,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "sign_in"){
+                    RootNavHost(
+                        startDestination = Graph.ONBOARD
+                    )
+                    /*NavHost(navController = navController, startDestination = "sign_in"){
                         composable("sign_in"){
                             val viewModel = viewModel<SignInViewModel>()
                             val state by viewModel.state.collectAsStateWithLifecycle()
@@ -85,7 +90,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 })
                         }
-                    }
+                    }*/
                 }
             }
         }
