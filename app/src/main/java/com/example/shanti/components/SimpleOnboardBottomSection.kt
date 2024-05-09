@@ -12,6 +12,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.shanti.navigation.graph.Graph
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import kotlinx.coroutines.launch
@@ -34,7 +35,8 @@ fun SimpleOnboardBottomSection(
         if (pagerState.currentPage == 2) {
             Button(
                 onClick = {
-                          //TODO: Sign in Login
+                        rootNavHostController.navigate(Graph.SIGNIN) {
+                    }
                 },
             ) {
                 Text(text = "Get started!")

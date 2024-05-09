@@ -47,7 +47,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     RootNavHost(
-                        startDestination = Graph.ONBOARD
+                        startDestination = Graph.ONBOARD,
+                        googleAuthUIClient = googleAuthUIClient
                     )
                     /*NavHost(navController = navController, startDestination = "sign_in"){
                         composable("sign_in"){
