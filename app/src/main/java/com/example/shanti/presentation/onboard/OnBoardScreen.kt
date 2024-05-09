@@ -49,8 +49,8 @@ fun OnboardScreen(
     items.add(
         OnBoardingData(
             url = "https://lottie.host/75718fc3-ffb1-48a5-aabf-d5b4f74fa9be/YDANP9jBT3.json",
-            "Breathe Deep, Live Fully: Find Serenity in Every Breath!",
-            "Dive deep into the power of your breath and unlock a world of calm, clarity, and vitality. Let each inhale inspire you and each exhale ground you as you embark on a journey of mindful breathing. Discover the transformative potential of your breath and find peace in every moment."
+            "Live Fully: Find Serenity in Every Breath!",
+            "Dive deep into the power of your breath and unlock a world of calm, clarity, and vitality. Discover the transformative potential of your breath and find peace in every moment."
         )
     )
 
