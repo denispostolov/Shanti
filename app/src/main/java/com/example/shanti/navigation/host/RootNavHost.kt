@@ -8,12 +8,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.presentation.onboard.OnboardScreen
+import com.example.shanti.presentation.signin.GoogleAuthUIClient
+import com.example.shanti.presentation.signin.SignInScreenContent
+
 
 @Composable
 fun RootNavHost(
     modifier: Modifier = Modifier,
     navHostController: NavHostController = rememberNavController(),
     startDestination: String,
+    googleAuthUIClient: GoogleAuthUIClient
 ) {
     NavHost(
         modifier = modifier,
@@ -27,6 +31,11 @@ fun RootNavHost(
             OnboardScreen(
                 rootNavHostController = navHostController,
             )
+        }
+        composable(
+            route = Graph.SIGNIN
+        ) {
+            SignInScreenContent(navController = navHostController, googleAuthUIClient = googleAuthUIClient)
         }
     }
 }
