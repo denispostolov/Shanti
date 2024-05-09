@@ -33,24 +33,24 @@ fun OnboardScreen(
     items.add(
         OnBoardingData(
             url = "https://lottie.host/56b1b0b9-5052-40f3-a4fc-f66a68c4c083/WqMQ6UdoKN.json",
-            "Meditation is your way",
-            ""
+            "Pause and Meditate",
+            "Take a deep breath and embark on a journey of self-discovery and inner peace as you explore our guided meditation sessions. Embrace each moment with mindfulness, and let the tranquility of meditation guide you towards a balanced and harmonious life."
         )
     )
 
     items.add(
         OnBoardingData(
             url = "https://lottie.host/3be6ea4a-1fa6-4313-a601-008bad4220cb/HEdpwg9lfI.json",
-            "Yoga is power",
-            ""
+            "Elevate Your Practice, Unleash Your Potential: Yoga for Every Body and Every Soul",
+            "Step onto the mat and embrace the journey of self-discovery, strength, and serenity. Flow through poses, breathe deeply, and cultivate mindfulness in every movement. Let yoga be your guide to a balanced mind, body, and soul."
         )
     )
 
     items.add(
         OnBoardingData(
             url = "https://lottie.host/75718fc3-ffb1-48a5-aabf-d5b4f74fa9be/YDANP9jBT3.json",
-            "Take a breath",
-            ""
+            "Breathe Deep, Live Fully: Find Serenity in Every Breath!",
+            "Dive deep into the power of your breath and unlock a world of calm, clarity, and vitality. Let each inhale inspire you and each exhale ground you as you embark on a journey of mindful breathing. Discover the transformative potential of your breath and find peace in every moment."
         )
     )
 
