@@ -115,7 +115,9 @@ fun OnBoardingPager(
                     )
                 }
             }
-            SimplePagerIndicator(item.size, pagerState.currentPage)
+            // Do not show page indicator in the final page
+            if(pagerState.currentPage != pagerState.pageCount - 1)
+                SimplePagerIndicator(item.size, pagerState.currentPage)
         }
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             SimpleOnboardBottomSection(
