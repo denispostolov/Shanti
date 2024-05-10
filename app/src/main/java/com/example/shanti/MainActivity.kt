@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,6 +26,7 @@ import com.example.shanti.navigation.host.RootNavHost
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.presentation.signin.SignInScreen
 import com.example.shanti.presentation.signin.SignInViewModel
+import com.example.shanti.session.AppSettings
 import com.example.shanti.ui.theme.ShantiTheme
 import com.google.android.gms.auth.api.identity.Identity
 import kotlinx.coroutines.launch
@@ -36,6 +39,11 @@ class MainActivity : ComponentActivity() {
             oneTapClient = Identity.getSignInClient(applicationContext)
         )
     }
+
+    private val appSettings by lazy {
+        AppSettings(context = applicationContext)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,9 +54,12 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
+                    val isFirstAccessState = appSettings.isFirstAccess.collectAsState(initial = true)
+
                     RootNavHost(
-                        startDestination = Graph.ONBOARD,
-                        googleAuthUIClient = googleAuthUIClient
+                        startDestination = if(isFirstAccessState.value) Graph.ONBOARD else Graph.SIGNIN,
+                        googleAuthUIClient = googleAuthUIClient,
+                        appSettings = appSettings
                     )
                     /*NavHost(navController = navController, startDestination = "sign_in"){
                         composable("sign_in"){

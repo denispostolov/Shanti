@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.shanti.navigation.graph.Graph
+import com.example.shanti.session.AppSettings
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 fun SimpleOnboardBottomSection(
     pagerState: PagerState,
     rootNavHostController: NavHostController,
+    appSettings: AppSettings
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -36,6 +38,9 @@ fun SimpleOnboardBottomSection(
             Button(
                 onClick = {
                         rootNavHostController.navigate(Graph.SIGNIN) {
+                    }
+                    coroutineScope.launch {
+                        appSettings.setIsFirstAccess(false)
                     }
                 },
             ) {

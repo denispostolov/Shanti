@@ -11,6 +11,7 @@ import com.example.shanti.presentation.home.HomeScreen
 import com.example.shanti.presentation.onboard.OnboardScreen
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.presentation.signin.SignInScreenContent
+import com.example.shanti.session.AppSettings
 
 
 @Composable
@@ -18,7 +19,8 @@ fun RootNavHost(
     modifier: Modifier = Modifier,
     navHostController: NavHostController = rememberNavController(),
     startDestination: String,
-    googleAuthUIClient: GoogleAuthUIClient
+    googleAuthUIClient: GoogleAuthUIClient,
+    appSettings: AppSettings
 ) {
     NavHost(
         modifier = modifier,
@@ -31,6 +33,7 @@ fun RootNavHost(
         ) {
             OnboardScreen(
                 rootNavHostController = navHostController,
+                appSettings = appSettings
             )
         }
         composable(
