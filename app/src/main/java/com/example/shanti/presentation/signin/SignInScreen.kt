@@ -3,24 +3,23 @@ package com.example.shanti.presentation.signin
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.model.content.CircleShape
 import com.example.shanti.R
 import com.example.shanti.components.SignInButton
 
@@ -54,9 +53,9 @@ fun SignInScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.shanti_ic_launcher_background),
+                painter = painterResource(id = R.drawable.shanti_logo),
                 contentDescription = "",
-                modifier = Modifier.size(200.dp, 200.dp)
+                modifier = Modifier.size(200.dp, 200.dp).clip(CircleShape)
             )
             Text(
                 text = context.getString(R.string.welcome_to_shanti),
