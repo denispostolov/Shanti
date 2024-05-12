@@ -79,7 +79,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-
     // LottieFiles
     val lottieVersion = "4.2.0"
     implementation ("com.airbnb.android:lottie-compose:$lottieVersion")

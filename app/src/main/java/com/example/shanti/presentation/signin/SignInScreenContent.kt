@@ -14,15 +14,16 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.shanti.navigation.graph.Graph
+import com.example.shanti.session.SessionManager
 import kotlinx.coroutines.launch
 
 @Composable
 fun SignInScreenContent(
     rootNavHostController: NavHostController,
-    googleAuthUIClient: GoogleAuthUIClient
+    googleAuthUIClient: GoogleAuthUIClient,
+    sessionManager: SessionManager
 ) {
 
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
@@ -30,14 +31,6 @@ fun SignInScreenContent(
     val context = LocalContext.current
     val viewModel: SignInViewModel = viewModel()
     val state = viewModel.state.collectAsState()
-
-    // Launched Effect to check if the user is already logged in.
-    // If so navigate directly to home screen
-    LaunchedEffect(key1=Unit) {
-        if(googleAuthUIClient.getSignedInUser() != null){
-            rootNavHostController.navigate(Graph.HOME)
-        }
-    }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult()
@@ -62,6 +55,7 @@ fun SignInScreenContent(
                 Toast.LENGTH_LONG
             ).show()
 
+            sessionManager.setUserLoggedIn()
             rootNavHostController.navigate(Graph.HOME)
             viewModel.resetState()
         }

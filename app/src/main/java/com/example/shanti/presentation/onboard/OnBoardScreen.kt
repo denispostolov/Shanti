@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.shanti.components.SimpleOnboardBottomSection
 import com.example.shanti.components.SimplePagerIndicator
-import com.example.shanti.session.AppSettings
+import com.example.shanti.session.SessionManager
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -30,10 +27,10 @@ import com.google.accompanist.pager.PagerState
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardScreen(
-   appSettings: AppSettings,
    rootNavHostController: NavHostController,
+   sessionManager: SessionManager
 ){
-    val isFirstAccess = remember { mutableStateOf(true) }
+
     val items = ArrayList<OnBoardingData>()
 
     items.add(
@@ -67,13 +64,6 @@ fun OnboardScreen(
         initialPage = 0
     )
 
-    LaunchedEffect(key1 = Unit) {
-        appSettings.isFirstAccess.collect { isFirst ->
-            isFirstAccess.value = isFirst
-        }
-    }
-
-    if (isFirstAccess.value) {
         OnBoardingPager(
             item = items,
             pagerState = pagerState,
@@ -81,9 +71,9 @@ fun OnboardScreen(
                 .fillMaxWidth()
                 .background(color = Color.White),
             rootNavHostController = rootNavHostController,
-            appSettings = appSettings
+            //appSettings = appSettings
+            sessionManager = sessionManager
         )
-    }
 }
 
 @ExperimentalPagerApi
@@ -93,7 +83,7 @@ fun OnBoardingPager(
     pagerState: PagerState,
     modifier: Modifier,
     rootNavHostController: NavHostController,
-    appSettings: AppSettings
+    sessionManager: SessionManager
 ) {
     Box(modifier = modifier.fillMaxHeight()) {
         Column(
@@ -139,7 +129,8 @@ fun OnBoardingPager(
             SimpleOnboardBottomSection(
                 pagerState = pagerState,
                 rootNavHostController = rootNavHostController,
-                appSettings = appSettings
+                //appSettings = appSettings
+                sessionManager = sessionManager
             )
         }
     }

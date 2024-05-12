@@ -11,13 +11,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
+import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
+import com.example.shanti.session.SessionManager
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
     rootNavHostController: NavHostController,
-    googleAuthUIClient: GoogleAuthUIClient
+    googleAuthUIClient: GoogleAuthUIClient,
+    sessionManager: SessionManager
 ) {
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val lifecycleScope = lifecycleOwner.lifecycleScope
@@ -31,7 +34,8 @@ fun HomeScreen(
                 lifecycleScope.launch {
                     googleAuthUIClient.signOut()
                 }
-                rootNavHostController.popBackStack()
+                sessionManager.setUserUnLogged()
+                rootNavHostController.navigate(Graph.SIGNIN)
             }
         ) {
             Text(text = "Sign Out")
