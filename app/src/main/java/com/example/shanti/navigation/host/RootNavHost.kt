@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.presentation.home.HomeScreen
+import com.example.shanti.presentation.home.HomeScreenContent
 import com.example.shanti.presentation.onboard.OnboardScreen
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.presentation.signin.SignInScreenContent
@@ -44,7 +45,12 @@ fun RootNavHost(
         composable(
             route = Graph.HOME
         ) {
-            HomeScreen(rootNavHostController = navHostController, googleAuthUIClient = googleAuthUIClient, sessionManager = sessionManager)
+            //HomeScreen(rootNavHostController = navHostController, googleAuthUIClient = googleAuthUIClient, sessionManager = sessionManager)
+            HomeScreenContent(
+                rootNavHostController = navHostController,
+                googleAuthUIClient = googleAuthUIClient,
+                sessionManager = sessionManager,
+            )
         }
     }
 }

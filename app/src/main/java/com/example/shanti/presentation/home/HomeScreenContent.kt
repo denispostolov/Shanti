@@ -16,6 +16,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.shanti.components.SimpleModalNavigationDrawer
 import com.example.shanti.navigation.graph.Graph
+import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.session.SessionManager
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,6 +25,7 @@ fun HomeScreenContent(
     rootNavHostController: NavHostController,
     navHostController: NavHostController = rememberNavController(),
     sessionManager: SessionManager,
+    googleAuthUIClient: GoogleAuthUIClient,
 ) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
