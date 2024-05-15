@@ -27,7 +27,6 @@ fun HomeScreen(
     sessionManager: SessionManager
 ) {
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
     val lifecycleScope = lifecycleOwner.lifecycleScope
 
     Column(
