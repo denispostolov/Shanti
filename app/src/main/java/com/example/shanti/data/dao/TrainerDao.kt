@@ -15,12 +15,12 @@ interface TrainerDao {
     @Delete
     fun delete(trainer: TrainerEntity)
 
-    @Query("DELETE FROM trainerentity")
+    @Query("DELETE FROM TrainerEntity")
     fun clearAll()
 
-    @Query("SELECT * FROM trainerentity")
+    @Query("SELECT * FROM TrainerEntity")
     fun getAll(): List<TrainerEntity>
 
-    @Query("SELECT * FROM trainerentity WHERE email = :email")
+    @Query("SELECT * FROM TrainerEntity WHERE email = :email")
     fun getTrainerByEmail(email: String): TrainerEntity?
 }

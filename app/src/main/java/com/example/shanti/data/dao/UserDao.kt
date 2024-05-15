@@ -16,12 +16,12 @@ interface UserDao {
     @Upsert
     suspend fun upsertAll(user: UserEntity)
 
-    @Query("DELETE FROM userentity")
-    suspend fun clearAll()
+    @Query("DELETE FROM UserEntity")
+    fun clearAll()
 
     @Delete
     fun delete(user: UserEntity)
 
-    @Query("SELECT * FROM userentity WHERE email = :email")
+    @Query("SELECT * FROM UserEntity WHERE email = :email")
     fun getUserByEmail(email: String): UserEntity?
 }

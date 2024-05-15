@@ -88,12 +88,18 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-pager:0.12.0")
 
     // Room
-    val room_version = "2.5.1"
-    implementation("androidx.room:room-ktx:$room_version")
-    implementation("androidx.room:room-runtime:$room_version")
+    val roomVersion = "2.5.1"
+    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-paging:2.5.2")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-testing:2.5.1")
+
+
+    //Paging
+    val pagingVersion = "3.1.1"
+    implementation ("androidx.paging:paging-runtime:$pagingVersion")
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha19")
 
 }

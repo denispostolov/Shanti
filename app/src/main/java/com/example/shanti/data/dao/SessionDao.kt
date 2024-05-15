@@ -13,10 +13,10 @@ interface SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(users: List<SessionEntity>)
 
-    @Query("SELECT * FROM sessionentity")
+    @Query("SELECT * FROM SessionEntity")
     fun pagingSource(): PagingSource<Int, SessionEntity>
 
-    @Query("DELETE FROM sessionentity")
-    suspend fun clearAll()
+    @Query("DELETE FROM SessionEntity")
+    fun clearAll()
 
 }
