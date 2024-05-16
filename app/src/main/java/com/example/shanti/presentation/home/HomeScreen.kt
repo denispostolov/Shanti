@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -24,7 +25,8 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     rootNavHostController: NavHostController,
     googleAuthUIClient: GoogleAuthUIClient,
-    sessionManager: SessionManager
+    sessionManager: SessionManager,
+    viewModel: HomeScreenViewModel
 ) {
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val lifecycleScope = lifecycleOwner.lifecycleScope
