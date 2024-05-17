@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.shanti.data.entity.TrainerEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TrainerDao {
@@ -19,7 +20,7 @@ interface TrainerDao {
     fun clearAll()
 
     @Query("SELECT * FROM TrainerEntity")
-    fun getAll(): List<TrainerEntity>
+    fun getAll(): Flow<List<TrainerEntity>>
 
     @Query("SELECT * FROM TrainerEntity WHERE email = :email")
     fun getTrainerByEmail(email: String): TrainerEntity?

@@ -89,12 +89,16 @@ dependencies {
 
     // Room
     val roomVersion = "2.5.1"
-    implementation("androidx.room:room-ktx:$roomVersion")
+    /*implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-paging:2.5.2")
+    kapt("androidx.room:room-compiler:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-testing:2.5.1")
+    implementation("androidx.room:room-testing:2.5.1")*/
+    implementation (libs.androidx.room.ktx.v261)
+    kapt (libs.androidx.room.compiler.v261)
+    androidTestImplementation (libs.androidx.room.testing)
 
 
     //Paging

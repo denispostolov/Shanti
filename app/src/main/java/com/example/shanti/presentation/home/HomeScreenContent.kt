@@ -3,23 +3,16 @@ package com.example.shanti.presentation.home
 import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.outlined.ExitToApp
-import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,21 +23,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.shanti.components.SimpleModalNavigationDrawer
-import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.session.SessionManager
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.shanti.navigation.screen.HomeScreen
-import kotlinx.coroutines.launch
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import com.example.shanti.navigation.host.HomeNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +40,7 @@ fun HomeScreenContent(
     navHostController: NavHostController = rememberNavController(),
     sessionManager: SessionManager,
     googleAuthUIClient: GoogleAuthUIClient,
+    homeScreenViewModel: HomeScreenViewModel
 ) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -126,7 +113,8 @@ fun HomeScreenContent(
                 navHostController = navHostController,
                 startDestination = HomeScreen.Home.route,
                 sessionManager = sessionManager,
-                googleAuthUIClient = googleAuthUIClient
+                googleAuthUIClient = googleAuthUIClient,
+                homeScreenViewModel = homeScreenViewModel
             )
         }
     }

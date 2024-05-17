@@ -7,6 +7,9 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
@@ -24,27 +27,32 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     rootNavHostController: NavHostController,
-    googleAuthUIClient: GoogleAuthUIClient,
-    sessionManager: SessionManager,
     viewModel: HomeScreenViewModel
 ) {
-    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-    val lifecycleScope = lifecycleOwner.lifecycleScope
 
-    Column(
-        modifier = Modifier.padding(32.dp)
-    ){
-        Text(text = "Home screen")
-        Button(
-            onClick = {
-                lifecycleScope.launch {
-                    googleAuthUIClient.signOut()
+    val sessions = viewModel.sessions.collectAsState(null)
+
+    SimpleModalNavigationDrawer(
+        drawerState = rememberDrawerState(DrawerValue.Closed),
+        navHostController = rootNavHostController
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = "Sessions:")
+
+            sessions.value?.let {
+                sessions.value!!.forEach { session ->
+                    Text(
+                        text = "${session.trainerName} ${session.trainerSurname} - ${session.dateTime}",
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
                 }
-                sessionManager.setUserUnLogged()
-                rootNavHostController.navigate(Graph.SIGNIN)
             }
-        ) {
-            Text(text = "Sign Out")
+
+            Button(onClick = {
+                // Example button action
+            }) {
+                Text(text = "Refresh")
+            }
         }
     }
 }

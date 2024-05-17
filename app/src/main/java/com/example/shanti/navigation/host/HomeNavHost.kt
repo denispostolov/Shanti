@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.navigation.screen.HomeScreen
 import com.example.shanti.presentation.home.HomeScreen
+import com.example.shanti.presentation.home.HomeScreenViewModel
 import com.example.shanti.presentation.home.book_session.BookSessionScreen
 import com.example.shanti.presentation.home.breath_session.BreathSessionScreen
 import com.example.shanti.presentation.home.profile.ProfileScreen
@@ -21,7 +22,8 @@ fun HomeNavHost(
     navHostController: NavHostController,
     startDestination: String,
     googleAuthUIClient: GoogleAuthUIClient,
-    sessionManager: SessionManager
+    sessionManager: SessionManager,
+    homeScreenViewModel: HomeScreenViewModel
 ) {
     NavHost(
         modifier = modifier,
@@ -32,7 +34,7 @@ fun HomeNavHost(
         composable(
             route = HomeScreen.Home.route
         ) {
-            HomeScreen(rootNavHostController = rootNavHostController, googleAuthUIClient = googleAuthUIClient, sessionManager = sessionManager)
+            HomeScreen(rootNavHostController = rootNavHostController, viewModel = homeScreenViewModel)
         }
         composable(
             route = HomeScreen.BookSession.route
