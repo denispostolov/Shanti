@@ -17,16 +17,65 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.Purple80
+import kotlinx.coroutines.delay
 
 @Composable
 fun BreathSessionScreen() {
+    var duration by remember { mutableStateOf(30f) }
+    var isAnimating by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    val context = LocalContext.current
+    val vibrator = context.getSystemService(Vibrator::class.java)
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = "Durata (secondi): ${duration.toInt()}")
+        Slider(
+            value = duration,
+            onValueChange = { duration = it },
+            valueRange = 10f..120f, // Range from 10 to 120 seconds
+            steps = 11, // 11 steps for 10 seconds increments
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { isAnimating = true }) {
+            Text("Avvia")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (isAnimating) {
+            BreathingAnimation(
+                duration = duration.toInt(),
+                onEnd = { isAnimating = false },
+                vibrator = vibrator
+            )
+        }
+    }
+}
+
+@Composable
+fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
     val infiniteTransition = rememberInfiniteTransition(label = "")
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
@@ -37,9 +86,6 @@ fun BreathSessionScreen() {
         ), label = ""
     )
 
-    val context = LocalContext.current
-    val vibrator = context.getSystemService(Vibrator::class.java)
-
     val color by infiniteTransition.animateColor(
         initialValue = Purple80,
         targetValue = Purple40,
@@ -49,11 +95,14 @@ fun BreathSessionScreen() {
         ), label = ""
     )
 
-    LaunchedEffect(Unit) {
-        while (true) {
+    LaunchedEffect(duration) {
+        val totalDuration = duration * 1000L // Convert to milliseconds
+        val cycles = totalDuration / 4000L // Each cycle is 4 seconds (2 seconds in, 2 seconds out)
+        repeat(cycles.toInt()) {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
-            kotlinx.coroutines.delay(4000) // Wait for one full breath cycle (2 seconds in, 2 seconds out)
+            delay(4000L) // Wait for one full breath cycle (2 seconds in, 2 seconds out)
         }
+        onEnd()
     }
 
     Box(
