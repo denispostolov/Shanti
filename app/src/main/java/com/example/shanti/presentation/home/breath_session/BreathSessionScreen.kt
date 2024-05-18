@@ -2,6 +2,7 @@ package com.example.shanti.presentation.home.breath_session
 
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -21,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.shanti.ui.theme.Purple40
+import com.example.shanti.ui.theme.Purple80
 
 @Composable
 fun BreathSessionScreen() {
@@ -36,6 +39,15 @@ fun BreathSessionScreen() {
 
     val context = LocalContext.current
     val vibrator = context.getSystemService(Vibrator::class.java)
+
+    val color by infiniteTransition.animateColor(
+        initialValue = Purple80,
+        targetValue = Purple40,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -53,7 +65,7 @@ fun BreathSessionScreen() {
             modifier = Modifier
                 .size(200.dp)
                 .scale(scale)
-                .background(Color.Cyan, shape = CircleShape)
+                .background(color, shape = CircleShape)
         )
     }
 }
