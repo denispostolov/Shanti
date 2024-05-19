@@ -78,6 +78,13 @@ fun SimpleSessionCard(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
+                    Text(text = "Type of practise:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = session.practiseType.toString(), color = MaterialTheme.colorScheme.onPrimary)
+                }
+                Row(
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
                     Text(text = "Google meet room:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     Text(text = session.urlMeet, color = MaterialTheme.colorScheme.onPrimary)
                 }

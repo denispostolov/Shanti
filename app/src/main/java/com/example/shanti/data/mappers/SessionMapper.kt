@@ -10,6 +10,7 @@ fun SessionEntity.toSession(): Session {
         trainerName = trainerName,
         trainerSurname = trainerSurname,
         status = status,
+        practiseType = practiseType,
         urlMeet = urlMeet
     )
 }

@@ -9,6 +9,7 @@ data class Session(
     val trainerName: String,
     val trainerSurname: String,
     val status: Status,
+    val practiseType: PractiseType,
     val urlMeet: String
 ) {
     fun trainerFullName(): String {
