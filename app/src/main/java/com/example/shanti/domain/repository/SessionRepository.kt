@@ -43,7 +43,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         dateTime = Date(),
                         trainerName = "Bruno",
                         trainerSurname = "Bianchetti",
-                        status = Status.FUTURE,
+                        status = Status.CANCELED,
                         practiseType = PractiseType.YOGA,
                         urlMeet = "https://meet.google.com/ube-qubu-ahe"
                     )

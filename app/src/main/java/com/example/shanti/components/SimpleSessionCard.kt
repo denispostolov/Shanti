@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.shanti.data.entity.SessionEntity
+import com.example.shanti.domain.model.Status
 import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.color1
 import com.example.shanti.ui.theme.color2
@@ -86,7 +87,12 @@ fun SimpleSessionCard(
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(text = "Google meet room:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
-                    Text(text = session.urlMeet, color = MaterialTheme.colorScheme.onPrimary)
+                    if(session.status == Status.FUTURE) {
+                        ClickableLinkText(url = session.urlMeet, colorText = MaterialTheme.colorScheme.onPrimary)
+                    } else {
+                        Text(text = session.urlMeet, color = MaterialTheme.colorScheme.onPrimary)
+                    }
+
                 }
             }
         }
