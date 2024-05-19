@@ -34,7 +34,7 @@ fun HomeNavHost(
         composable(
             route = HomeScreen.Home.route
         ) {
-            HomeScreen(rootNavHostController = rootNavHostController, viewModel = homeScreenViewModel)
+            HomeScreen(viewModel = homeScreenViewModel)
         }
         composable(
             route = HomeScreen.BookSession.route
