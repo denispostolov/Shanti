@@ -22,7 +22,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.shanti.components.SimpleModalNavigationDrawer
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.session.SessionManager
 import androidx.compose.material3.NavigationBarItem
@@ -58,66 +57,59 @@ fun HomeScreenContent(
         }
     )
 
-    SimpleModalNavigationDrawer(
-        drawerState = drawerState,
-        navHostController = navHostController
-    ) {
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    content = {
-                        NavigationBar {
-                            NavigationBarItem(
-                                icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-                                label = { Text("Home") },
-                                alwaysShowLabel = true,
-                                selected = navBackStackEntry?.destination?.route == HomeScreen.Home.route,
-                                onClick = {
-                                    navHostController.navigate(HomeScreen.Home.route)
-                                }
-                            )
-                            NavigationBarItem(
-                                icon = { Icon(Icons.Filled.DateRange, contentDescription = "Book Session") },
-                                label = { Text("Book Session") },
-                                alwaysShowLabel = true,
-                                selected = navBackStackEntry?.destination?.route == HomeScreen.BookSession.route,
-                                onClick = {
-                                    navHostController.navigate(HomeScreen.BookSession.route)
-                                }
-                            )
-                            NavigationBarItem(
-                                icon = { Icon(Icons.Filled.Face, contentDescription = "Breath Session") },
-                                label = { Text("Breath") },
-                                alwaysShowLabel = true,
-                                selected = navBackStackEntry?.destination?.route == HomeScreen.BreathSession.route,
-                                onClick = {
-                                    navHostController.navigate(HomeScreen.BreathSession.route)
-                                }
-                            )
-                            NavigationBarItem(
-                                icon = { Icon(Icons.Filled.AccountCircle, contentDescription = "Profile") },
-                                label = { Text("Profile") },
-                                selected = navBackStackEntry?.destination?.route == HomeScreen.Profile.route,
-                                onClick = {
-                                    navHostController.navigate(HomeScreen.Profile.route)
-                                }
-                            )
-                        }
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                content = {
+                    NavigationBar {
+                        NavigationBarItem(
+                            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
+                            label = { Text("Home") },
+                            alwaysShowLabel = true,
+                            selected = navBackStackEntry?.destination?.route == HomeScreen.Home.route,
+                            onClick = {
+                                navHostController.navigate(HomeScreen.Home.route)
+                            }
+                        )
+                        NavigationBarItem(
+                            icon = { Icon(Icons.Filled.DateRange, contentDescription = "Book Session") },
+                            label = { Text("Book Session") },
+                            alwaysShowLabel = true,
+                            selected = navBackStackEntry?.destination?.route == HomeScreen.BookSession.route,
+                            onClick = {
+                                navHostController.navigate(HomeScreen.BookSession.route)
+                            }
+                        )
+                        NavigationBarItem(
+                            icon = { Icon(Icons.Filled.Face, contentDescription = "Breath Session") },
+                            label = { Text("Breath") },
+                            alwaysShowLabel = true,
+                            selected = navBackStackEntry?.destination?.route == HomeScreen.BreathSession.route,
+                            onClick = {
+                                navHostController.navigate(HomeScreen.BreathSession.route)
+                            }
+                        )
+                        NavigationBarItem(
+                            icon = { Icon(Icons.Filled.AccountCircle, contentDescription = "Profile") },
+                            label = { Text("Profile") },
+                            selected = navBackStackEntry?.destination?.route == HomeScreen.Profile.route,
+                            onClick = {
+                                navHostController.navigate(HomeScreen.Profile.route)
+                            }
+                        )
                     }
-                )
-            }
-        ) { contentPadding ->
-            HomeNavHost(
-                modifier = Modifier.padding(contentPadding),
-                rootNavHostController = rootNavHostController,
-                navHostController = navHostController,
-                startDestination = HomeScreen.Home.route,
-                sessionManager = sessionManager,
-                googleAuthUIClient = googleAuthUIClient,
-                homeScreenViewModel = homeScreenViewModel
+                }
             )
         }
+    ) { contentPadding ->
+        HomeNavHost(
+            modifier = Modifier.padding(contentPadding),
+            rootNavHostController = rootNavHostController,
+            navHostController = navHostController,
+            startDestination = HomeScreen.Home.route,
+            sessionManager = sessionManager,
+            googleAuthUIClient = googleAuthUIClient,
+            homeScreenViewModel = homeScreenViewModel
+        )
     }
-
-
 }
