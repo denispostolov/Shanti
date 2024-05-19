@@ -9,7 +9,7 @@ import com.example.shanti.data.entity.SessionEntity
 
 @Database(
     entities = [SessionEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class SessionDatabase: RoomDatabase() {

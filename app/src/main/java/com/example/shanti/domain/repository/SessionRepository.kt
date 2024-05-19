@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.shanti.data.dao.SessionDao
 import com.example.shanti.data.entity.SessionEntity
+import com.example.shanti.domain.model.PractiseType
 import com.example.shanti.domain.model.Status
 import com.example.shanti.presentation.home.HomeScreenViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         trainerName = "Franco",
                         trainerSurname = "Parapallo",
                         status = Status.FUTURE,
+                        practiseType = PractiseType.YOGA,
                         urlMeet = "https://meet.google.com/ube-qubu-ahe"
                     ),
                     SessionEntity(
@@ -34,6 +36,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         trainerName = "Giacomo",
                         trainerSurname = "Spuno",
                         status = Status.FUTURE,
+                        practiseType = PractiseType.MEDITATION,
                         urlMeet = "https://meet.google.com/ube-qubu-ahe"
                     ),
                     SessionEntity(
@@ -41,6 +44,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         trainerName = "Bruno",
                         trainerSurname = "Bianchetti",
                         status = Status.FUTURE,
+                        practiseType = PractiseType.YOGA,
                         urlMeet = "https://meet.google.com/ube-qubu-ahe"
                     )
 

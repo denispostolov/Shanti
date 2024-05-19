@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.shanti.data.entity.converter.DateTypeConverter
+import com.example.shanti.domain.model.PractiseType
 import com.example.shanti.domain.model.Status
 import java.util.Date
 
@@ -16,5 +17,6 @@ data class SessionEntity(
     val trainerName: String,
     val trainerSurname: String,
     val status: Status,
+    val practiseType: PractiseType,
     val urlMeet: String
 )
