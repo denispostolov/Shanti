@@ -25,6 +25,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                 val list = listOf(
                     SessionEntity(
                         dateTime = Date(),
+                        time = "16:30",
                         trainerName = "Franco",
                         trainerSurname = "Parapallo",
                         status = Status.FUTURE,
@@ -33,6 +34,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                     ),
                     SessionEntity(
                         dateTime = Date(),
+                        time = "10:00",
                         trainerName = "Giacomo",
                         trainerSurname = "Spuno",
                         status = Status.FUTURE,
@@ -41,6 +43,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                     ),
                     SessionEntity(
                         dateTime = Date(),
+                        time = "17:45",
                         trainerName = "Bruno",
                         trainerSurname = "Bianchetti",
                         status = Status.CANCELED,

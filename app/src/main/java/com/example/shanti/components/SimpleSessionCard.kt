@@ -80,6 +80,8 @@ fun SimpleSessionCard(
                 ) {
                     Text(text = "Date:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     Text(text = session.formattedDate(), color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = "at:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = session.time, color = MaterialTheme.colorScheme.onPrimary)
                 }
                 Row(
                     modifier = Modifier,

@@ -7,6 +7,7 @@ fun SessionEntity.toSession(): Session {
     return Session(
         id = id.toString(),
         dateTime = dateTime,
+        time = time,
         trainerName = trainerName,
         trainerSurname = trainerSurname,
         status = status,

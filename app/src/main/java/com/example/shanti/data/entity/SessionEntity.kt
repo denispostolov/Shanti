@@ -14,6 +14,7 @@ data class SessionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val dateTime: Date,
+    val time: String,
     val trainerName: String,
     val trainerSurname: String,
     val status: Status,

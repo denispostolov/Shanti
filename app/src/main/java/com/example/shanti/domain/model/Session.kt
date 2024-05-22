@@ -6,6 +6,7 @@ import java.util.Date
 data class Session(
     val id: String,
     val dateTime: Date,
+    val time: String,
     val trainerName: String,
     val trainerSurname: String,
     val status: Status,
