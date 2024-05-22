@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import com.example.shanti.navigation.screen.HomeScreen
 import androidx.compose.material3.NavigationBar
 import com.example.shanti.navigation.host.HomeNavHost
+import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +40,8 @@ fun HomeScreenContent(
     navHostController: NavHostController = rememberNavController(),
     sessionManager: SessionManager,
     googleAuthUIClient: GoogleAuthUIClient,
-    homeScreenViewModel: HomeScreenViewModel
+    homeScreenViewModel: HomeScreenViewModel,
+    bookSessionViewModel: BookSessionViewModel
 ) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -109,7 +111,8 @@ fun HomeScreenContent(
             startDestination = HomeScreen.Home.route,
             sessionManager = sessionManager,
             googleAuthUIClient = googleAuthUIClient,
-            homeScreenViewModel = homeScreenViewModel
+            homeScreenViewModel = homeScreenViewModel,
+            bookSessionViewModel = bookSessionViewModel
         )
     }
 }

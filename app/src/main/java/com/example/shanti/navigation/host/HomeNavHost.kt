@@ -10,6 +10,7 @@ import com.example.shanti.navigation.screen.HomeScreen
 import com.example.shanti.presentation.home.HomeScreen
 import com.example.shanti.presentation.home.HomeScreenViewModel
 import com.example.shanti.presentation.home.book_session.BookSessionScreen
+import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 import com.example.shanti.presentation.home.breath_session.BreathSessionScreen
 import com.example.shanti.presentation.home.profile.ProfileScreen
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
@@ -23,7 +24,8 @@ fun HomeNavHost(
     startDestination: String,
     googleAuthUIClient: GoogleAuthUIClient,
     sessionManager: SessionManager,
-    homeScreenViewModel: HomeScreenViewModel
+    homeScreenViewModel: HomeScreenViewModel,
+    bookSessionViewModel: BookSessionViewModel
 ) {
     NavHost(
         modifier = modifier,
@@ -39,7 +41,7 @@ fun HomeNavHost(
         composable(
             route = HomeScreen.BookSession.route
         ) {
-            BookSessionScreen()
+            BookSessionScreen(viewModel = bookSessionViewModel)
         }
         composable(
             route = HomeScreen.BreathSession.route

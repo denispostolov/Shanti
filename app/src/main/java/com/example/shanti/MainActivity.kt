@@ -14,9 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import com.example.shanti.common.Constants
 import com.example.shanti.data.database.SessionDatabase
+import com.example.shanti.data.database.TrainerDatabase
 import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.navigation.host.RootNavHost
 import com.example.shanti.presentation.home.HomeScreenViewModel
+import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.session.AppSettings
 import com.example.shanti.session.SessionManager
@@ -44,6 +46,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val sessionsDatabase = SessionDatabase.getDatabase(this)
+            val trainersDatabase = TrainerDatabase.getDatabase(this)
             ShantiTheme {
                 val homeScreenViewModel: HomeScreenViewModel by viewModels {
                     object : ViewModelProvider.Factory {
@@ -56,7 +59,19 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+                val bookSessionViewModel: BookSessionViewModel by viewModels {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                            if (modelClass.isAssignableFrom(BookSessionViewModel::class.java)) {
+                                @Suppress("UNCHECKED_CAST")
+                                return BookSessionViewModel(trainersDatabase!!) as T
+                            }
+                            throw IllegalArgumentException("Unknown ViewModel class")
+                        }
+                    }
+                }
                 homeScreenViewModel.init()
+                bookSessionViewModel.init()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -70,7 +85,8 @@ class MainActivity : ComponentActivity() {
                         else Graph.SIGNIN,
                         googleAuthUIClient = googleAuthUIClient,
                         sessionManager = sessionManager,
-                        homeScreenViewModel = homeScreenViewModel
+                        homeScreenViewModel = homeScreenViewModel,
+                        bookSessionViewModel = bookSessionViewModel
                     )
                 }
             }

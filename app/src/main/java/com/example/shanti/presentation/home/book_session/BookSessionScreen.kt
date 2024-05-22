@@ -25,6 +25,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.shanti.components.PractiseTypeListSheet
 import com.example.shanti.components.TrainerListSheet
+import com.example.shanti.data.mappers.toTrainer
 import com.example.shanti.domain.model.Gender
 import com.example.shanti.domain.model.PractiseType
 import com.example.shanti.domain.model.Trainer
@@ -48,7 +51,7 @@ import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookSessionScreen() {
+fun BookSessionScreen(viewModel: BookSessionViewModel) {
 
     val scope = rememberCoroutineScope()
 
@@ -78,7 +81,8 @@ fun BookSessionScreen() {
     var selectedTrainer by remember { mutableStateOf("") }
 
     val practiseTypes = listOf(PractiseType.YOGA,PractiseType.MEDITATION, PractiseType.BOTH)
-    val trainers = listOf(Trainer(name = "Franco", surname = "Parapallo", email = "franco.parapallo@mail.com", gender = Gender.MALE, practiseType = PractiseType.YOGA), Trainer(name = "Giacomo", surname = "Spuno", email = "giacomo.spuno@mail.com", gender = Gender.MALE, practiseType = PractiseType.MEDITATION))
+    val trainers by viewModel.trainersByPractiseType.collectAsState()
+
 
     val context = LocalContext.current
 
@@ -88,6 +92,10 @@ fun BookSessionScreen() {
         practiseTypes = practiseTypes,
         onDismissRequest = {isPractiseTypeSheetOpen = false},
         onPractiseTypeClicked = { practiseType ->
+            // Get all the trainers specific for practiseType
+            viewModel.selectPractiseType(practiseType)
+            // Reset selected trainer
+            selectedTrainer = ""
             scope.launch { sheetState.hide() }.invokeOnCompletion {
                 if(!sheetState.isVisible){
                     isPractiseTypeSheetOpen = false
@@ -100,7 +108,7 @@ fun BookSessionScreen() {
     TrainerListSheet(
         sheetState = sheetState,
         isOpen = isTrainerSheetOpen,
-        trainers = trainers,
+        trainers = trainers.map { it.toTrainer() },
         onDismissRequest = {isTrainerSheetOpen = false},
         onTrainerClicked = { trainer ->
             scope.launch { sheetState.hide() }.invokeOnCompletion {

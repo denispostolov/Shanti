@@ -10,6 +10,7 @@ import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.presentation.home.HomeScreen
 import com.example.shanti.presentation.home.HomeScreenContent
 import com.example.shanti.presentation.home.HomeScreenViewModel
+import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 import com.example.shanti.presentation.onboard.OnboardScreen
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.presentation.signin.SignInScreenContent
@@ -23,7 +24,8 @@ fun RootNavHost(
     startDestination: String,
     googleAuthUIClient: GoogleAuthUIClient,
     sessionManager: SessionManager,
-    homeScreenViewModel: HomeScreenViewModel
+    homeScreenViewModel: HomeScreenViewModel,
+    bookSessionViewModel: BookSessionViewModel
 ) {
     NavHost(
         modifier = modifier,
@@ -52,7 +54,8 @@ fun RootNavHost(
                 rootNavHostController = navHostController,
                 googleAuthUIClient = googleAuthUIClient,
                 sessionManager = sessionManager,
-                homeScreenViewModel = homeScreenViewModel
+                homeScreenViewModel = homeScreenViewModel,
+                bookSessionViewModel = bookSessionViewModel
             )
         }
     }
