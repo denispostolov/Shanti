@@ -44,44 +44,40 @@ fun BreathSessionScreen() {
     val context = LocalContext.current
     val vibrator = context.getSystemService(Vibrator::class.java)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "Durata (secondi): ${duration.toInt()}")
-        CircularSlider(
-            onChange = { newValue -> duration = newValue * 110 + 10 }, // Scale 0-1 to 10-120
-            modifier = Modifier.size(200.dp),
-            progressColor = Purple80,
-            backgroundColor = Purple40,
-            thumbColor = Purple80,
-            stroke = 15f
+    if (!isAnimating) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = "Durata (secondi): ${duration.toInt()}")
+            Spacer(modifier = Modifier.height(16.dp))
+            Box(contentAlignment = Alignment.Center) {
+                CircularSlider(
+                    onChange = { newValue -> duration = newValue * 110 + 10 }, // Scale 0-1 to 10-120
+                    modifier = Modifier.size(300.dp),
+                    progressColor = Purple40,
+                    backgroundColor = Purple80,
+                    thumbColor = Purple40,
+                    stroke = 15f
+                )
+                Button(
+                    onClick = { isAnimating = true }) {
+                    Text("Avvia")
+                }
+            }
+        }
+    } else {
+        BreathingAnimation(
+            duration = duration.toInt(),
+            onEnd = { isAnimating = false },
+            vibrator = vibrator
         )
-//        Slider(
-//            value = duration,
-//            onValueChange = { duration = it },
-//            valueRange = 10f..120f, // Range from 10 to 120 seconds
-//            steps = 11, // 11 steps for 10 seconds increments
-//            modifier = Modifier.fillMaxWidth()
-//        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { isAnimating = true }) {
-            Text("Avvia")
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (isAnimating) {
-            BreathingAnimation(
-                duration = duration.toInt(),
-                onEnd = { isAnimating = false },
-                vibrator = vibrator
-            )
-        }
     }
 }
+
 
 @Composable
 fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
