@@ -37,6 +37,7 @@ import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.Purple80
 import kotlinx.coroutines.delay
 
+//TODO: Check the timer and the method onEnd; it doesn't work correctly
 @Composable
 fun BreathSessionScreen() {
     var duration by remember { mutableStateOf(30f) }
