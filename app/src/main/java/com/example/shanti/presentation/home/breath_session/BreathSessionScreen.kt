@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.shanti.components.CircularSlider
 import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.Purple80
 import kotlinx.coroutines.delay
@@ -51,13 +52,21 @@ fun BreathSessionScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(text = "Durata (secondi): ${duration.toInt()}")
-        Slider(
-            value = duration,
-            onValueChange = { duration = it },
-            valueRange = 10f..120f, // Range from 10 to 120 seconds
-            steps = 11, // 11 steps for 10 seconds increments
-            modifier = Modifier.fillMaxWidth()
+        CircularSlider(
+            onChange = { newValue -> duration = newValue * 110 + 10 }, // Scale 0-1 to 10-120
+            modifier = Modifier.size(200.dp),
+            progressColor = Purple80,
+            backgroundColor = Purple40,
+            thumbColor = Purple80,
+            stroke = 15f
         )
+//        Slider(
+//            value = duration,
+//            onValueChange = { duration = it },
+//            valueRange = 10f..120f, // Range from 10 to 120 seconds
+//            steps = 11, // 11 steps for 10 seconds increments
+//            modifier = Modifier.fillMaxWidth()
+//        )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { isAnimating = true }) {
             Text("Avvia")
