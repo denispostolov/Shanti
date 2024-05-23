@@ -14,14 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
+import com.example.shanti.session.SessionManager
+import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileScreen(googleAuthUIClient: GoogleAuthUIClient) {
+fun ProfileScreen(googleAuthUIClient: GoogleAuthUIClient, sessionManager: SessionManager, rootNavHostController: NavHostController) {
     val user = googleAuthUIClient.getSignedInUser()
     val coroutineScope = rememberCoroutineScope()
-    
 
     Column(
         modifier = Modifier
@@ -38,14 +41,20 @@ fun ProfileScreen(googleAuthUIClient: GoogleAuthUIClient) {
                 .clip(CircleShape),
             contentScale = ContentScale.Crop
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = googleAuthUIClient.getSignedInUser()?.username!!, style = MaterialTheme.typography.bodySmall)
+        Spacer(modifier = Modifier.height(25.dp))
+        Text(text = user?.username!!, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = googleAuthUIClient.getSignedInUser()?.email!!, style = MaterialTheme.typography.bodySmall)
-        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = user?.email!!, style = MaterialTheme.typography.bodyMedium)
+        Spacer(modifier = Modifier.height(50.dp))
         Button(
             onClick = {
-                //googleAuthUIClient.signOut()
+                coroutineScope.launch {
+                    sessionManager.setUserUnLogged()
+                    googleAuthUIClient.signOut()
+                }
+                rootNavHostController.navigate(Graph.SIGNIN){
+                    popUpTo(Graph.HOME){inclusive = true}
+                }
             },
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
         ) {

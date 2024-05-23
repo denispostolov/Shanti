@@ -51,7 +51,11 @@ fun HomeNavHost(
         composable(
             route = HomeScreen.Profile.route
         ) {
-            ProfileScreen(googleAuthUIClient=googleAuthUIClient)
+            ProfileScreen(
+                googleAuthUIClient=googleAuthUIClient,
+                sessionManager = sessionManager,
+                rootNavHostController = rootNavHostController
+            )
         }
     }
 
