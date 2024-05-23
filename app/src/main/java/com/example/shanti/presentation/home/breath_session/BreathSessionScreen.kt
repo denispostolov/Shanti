@@ -20,9 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -31,8 +29,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.shanti.components.CircularSlider
 import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.Purple80
@@ -55,16 +54,19 @@ fun BreathSessionScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Durata (secondi): ${duration.toInt()}")
+            Text(
+                text = "Durata (secondi): ${duration.toInt()}",
+                style = MaterialTheme.typography.headlineMedium
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Box(contentAlignment = Alignment.Center) {
                 CircularSlider(
                     onChange = { newValue -> duration = newValue * 110 + 10 }, // Scale 0-1 to 10-120
-                    modifier = Modifier.size(300.dp),
+                    modifier = Modifier.size(400.dp),
                     progressColor = Purple40,
                     backgroundColor = Purple80,
                     thumbColor = Purple40,
-                    stroke = 15f
+                    stroke = 30f
                 )
                 Button(
                     colors = ButtonDefaults.buttonColors(containerColor = Purple40),
@@ -85,12 +87,12 @@ fun BreathSessionScreen() {
 
 @Composable
 fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
-    val infiniteTransition = rememberInfiniteTransition()
+    val infiniteTransition = rememberInfiniteTransition(label = "")
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
         targetValue = 1.5f,
         animationSpec = infiniteRepeatable(
-            animation = tween(2000, easing = LinearEasing),
+            animation = tween(4000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         ), label = ""
     )
@@ -99,19 +101,23 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
         initialValue = Purple40,
         targetValue = Purple80,
         animationSpec = infiniteRepeatable(
-            animation = tween(2000, easing = LinearEasing),
+            animation = tween(4000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         ), label = ""
     )
 
     var remainingTime by remember { mutableStateOf(duration) }
+    var isBreathingIn by remember { mutableStateOf(true) }
 
     LaunchedEffect(duration) {
         val totalDuration = duration * 1000L // Convert to milliseconds
         val cycles = totalDuration / 4000L // Each cycle is 4 seconds (2 seconds in, 2 seconds out)
         repeat(cycles.toInt()) {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
-            delay(4000L) // Wait for one full breath cycle (2 seconds in, 2 seconds out)
+            delay(4000L) // Wait for inhale
+            isBreathingIn = false
+            delay(4000L) // Wait for exhale
+            isBreathingIn = true
             remainingTime -= 4
         }
         onEnd()
@@ -126,11 +132,20 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
             modifier = Modifier
                 .size(200.dp)
                 .scale(scale)
-                .background(color, shape = CircleShape)
-        )
+                .background(color, shape = CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = if (isBreathingIn) "Breath In" else "Breath Out",
+                fontSize = 24.sp,
+                color = Color.White,
+                textAlign = TextAlign.Center
+            )
+        }
         Text(
             text = "Tempo rimanente: ${remainingTime}s",
             modifier = Modifier.align(Alignment.TopCenter),
+            style = MaterialTheme.typography.titleLarge,
             color = Color.Black
         )
     }
