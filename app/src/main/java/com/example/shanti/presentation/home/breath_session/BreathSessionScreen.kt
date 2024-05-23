@@ -118,9 +118,15 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
             isBreathingIn = false
             delay(4000L) // Wait for exhale
             isBreathingIn = true
-            remainingTime -= 4
         }
         onEnd()
+    }
+
+    LaunchedEffect(remainingTime) {
+        while (remainingTime > 0) {
+            delay(1000L)
+            remainingTime -= 1
+        }
     }
 
     Box(
