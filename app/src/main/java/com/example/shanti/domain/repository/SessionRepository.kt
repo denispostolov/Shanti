@@ -28,7 +28,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         time = "16:30",
                         trainerName = "Franco",
                         trainerSurname = "Parapallo",
-                        status = Status.FUTURE,
+                        status = Status.PASSED,
                         practiseType = PractiseType.YOGA,
                         urlMeet = "https://meet.google.com/ube-qubu-ahe"
                     ),
@@ -37,7 +37,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         time = "10:00",
                         trainerName = "Giacomo",
                         trainerSurname = "Spuno",
-                        status = Status.FUTURE,
+                        status = Status.PASSED,
                         practiseType = PractiseType.MEDITATION,
                         urlMeet = "https://meet.google.com/ube-qubu-ahe"
                     ),

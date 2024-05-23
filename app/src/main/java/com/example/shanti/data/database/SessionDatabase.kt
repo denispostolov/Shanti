@@ -2,20 +2,29 @@ package com.example.shanti.data.database
 
 import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.shanti.data.dao.SessionDao
 import com.example.shanti.data.dao.TrainerDao
 import com.example.shanti.data.entity.SessionEntity
+import com.example.shanti.domain.model.PractiseType
+import com.example.shanti.domain.model.Status
+import com.example.shanti.presentation.home.HomeScreenViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Date
 
 @Database(
     entities = [SessionEntity::class],
-    version = 3,
+    version = 5,
     exportSchema = false
 )
 abstract class SessionDatabase: RoomDatabase() {
     abstract fun sessionDao(): SessionDao?
 
-    companion object{
+    companion object {
         // marking the instance as volatile to ensure atomic access to the variable
         @Volatile
         private var INSTANCE: SessionDatabase? = null
@@ -36,18 +45,13 @@ abstract class SessionDatabase: RoomDatabase() {
                             .fallbackToDestructiveMigration()
                             .addCallback(roomDatabaseCallback)
                             .build()
+
                     }
                 }
             }
             return INSTANCE
         }
 
-        /** TODO:
-         * Override the onOpen method to populate the database.
-         * For this sample, we clear the database every time it is created or opened.
-         * If you want to populate the database only when the database is created for the 1st time,
-         * override MyRoomDatabase.Callback()#onCreate
-         */
         private val roomDatabaseCallback: Callback =
             object : Callback() {
             }

@@ -8,7 +8,7 @@ import com.example.shanti.data.entity.TrainerEntity
 
 @Database(
     entities = [TrainerEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class TrainerDatabase: RoomDatabase() {
@@ -41,12 +41,6 @@ abstract class TrainerDatabase: RoomDatabase() {
             return INSTANCE
         }
 
-        /** TODO:
-         * Override the onOpen method to populate the database.
-         * For this sample, we clear the database every time it is created or opened.
-         * If you want to populate the database only when the database is created for the 1st time,
-         * override MyRoomDatabase.Callback()#onCreate
-         */
         private val roomDatabaseCallback: Callback =
             object : Callback() {
             }
