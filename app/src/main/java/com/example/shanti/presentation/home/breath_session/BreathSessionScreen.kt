@@ -18,6 +18,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -28,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.shanti.components.CircularSlider
@@ -64,6 +67,7 @@ fun BreathSessionScreen() {
                     stroke = 15f
                 )
                 Button(
+                    colors = ButtonDefaults.buttonColors(containerColor = Purple40),
                     onClick = { isAnimating = true }) {
                     Text("Avvia")
                 }
@@ -81,7 +85,7 @@ fun BreathSessionScreen() {
 
 @Composable
 fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
-    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val infiniteTransition = rememberInfiniteTransition()
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
         targetValue = 1.5f,
@@ -92,13 +96,15 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
     )
 
     val color by infiniteTransition.animateColor(
-        initialValue = Purple80,
-        targetValue = Purple40,
+        initialValue = Purple40,
+        targetValue = Purple80,
         animationSpec = infiniteRepeatable(
             animation = tween(2000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         ), label = ""
     )
+
+    var remainingTime by remember { mutableStateOf(duration) }
 
     LaunchedEffect(duration) {
         val totalDuration = duration * 1000L // Convert to milliseconds
@@ -106,6 +112,7 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
         repeat(cycles.toInt()) {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
             delay(4000L) // Wait for one full breath cycle (2 seconds in, 2 seconds out)
+            remainingTime -= 4
         }
         onEnd()
     }
@@ -120,6 +127,11 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
                 .size(200.dp)
                 .scale(scale)
                 .background(color, shape = CircleShape)
+        )
+        Text(
+            text = "Tempo rimanente: ${remainingTime}s",
+            modifier = Modifier.align(Alignment.TopCenter),
+            color = Color.Black
         )
     }
 }
