@@ -14,5 +14,8 @@ data class TrainerEntity(
     val email: String,
     val gender: Gender,
     val practiseType: PractiseType
-
-)
+) {
+    fun fullName(): String {
+        return name.plus(" ").plus(surname)
+    }
+}

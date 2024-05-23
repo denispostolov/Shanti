@@ -18,7 +18,7 @@ import java.util.Date
 
 @Database(
     entities = [SessionEntity::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class SessionDatabase: RoomDatabase() {

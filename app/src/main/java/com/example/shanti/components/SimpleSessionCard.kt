@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import com.example.shanti.domain.model.Session
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,6 +17,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.shanti.R
+import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.domain.model.PractiseType
 import com.example.shanti.domain.model.Status
 import com.example.shanti.ui.theme.Purple40
@@ -25,7 +25,7 @@ import com.example.shanti.ui.theme.color1
 
 @Composable
 fun SimpleSessionCard(
-    session: Session
+    session: SessionEntity
 ) {
 
     val imageRes = when (session.practiseType) {

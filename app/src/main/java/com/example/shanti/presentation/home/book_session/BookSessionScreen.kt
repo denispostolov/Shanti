@@ -22,10 +22,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -39,10 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.shanti.components.PractiseTypeListSheet
 import com.example.shanti.components.TrainerListSheet
-import com.example.shanti.data.mappers.toTrainer
-import com.example.shanti.domain.model.Gender
 import com.example.shanti.domain.model.PractiseType
-import com.example.shanti.domain.model.Trainer
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -108,7 +103,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
     TrainerListSheet(
         sheetState = sheetState,
         isOpen = isTrainerSheetOpen,
-        trainers = trainers.map { it.toTrainer() },
+        trainers = trainers,
         onDismissRequest = {isTrainerSheetOpen = false},
         onTrainerClicked = { trainer ->
             scope.launch { sheetState.hide() }.invokeOnCompletion {

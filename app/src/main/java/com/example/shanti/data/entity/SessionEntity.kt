@@ -6,6 +6,7 @@ import androidx.room.TypeConverters
 import com.example.shanti.data.entity.converter.DateTypeConverter
 import com.example.shanti.domain.model.PractiseType
 import com.example.shanti.domain.model.Status
+import java.text.SimpleDateFormat
 import java.util.Date
 
 @Entity
@@ -20,4 +21,12 @@ data class SessionEntity(
     val status: Status,
     val practiseType: PractiseType,
     val urlMeet: String
-)
+) {
+    fun trainerFullName(): String {
+        return trainerName.plus(" ").plus(trainerSurname)
+    }
+
+    fun formattedDate(): String {
+        return SimpleDateFormat("dd-MM-yyyy").format(dateTime)
+    }
+}

@@ -1,5 +1,4 @@
 package com.example.shanti.components
-import com.example.shanti.domain.model.Trainer
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,15 +19,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.shanti.data.entity.TrainerEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainerListSheet(
     sheetState: SheetState,
     isOpen: Boolean,
-    trainers: List<Trainer>,
+    trainers: List<TrainerEntity>,
     bottomSheetTitle: String = "Select Trainer",
-    onTrainerClicked: (Trainer) -> Unit,
+    onTrainerClicked: (TrainerEntity) -> Unit,
     onDismissRequest: () -> Unit
 ) {
     if(isOpen){

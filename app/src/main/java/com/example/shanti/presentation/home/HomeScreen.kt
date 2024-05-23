@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieConstants
 import com.example.shanti.components.SimpleLottieFiles
 import com.example.shanti.components.SimpleSessionCard
-import com.example.shanti.data.mappers.toSession
 
 
 @Composable
@@ -34,8 +33,7 @@ fun HomeScreen(
                 contentPadding = PaddingValues(16.dp)
             ) {
                 items(sessions.value!!) { sessionEntity ->
-                    val session = sessionEntity.toSession()
-                    SimpleSessionCard(session = session)
+                    SimpleSessionCard(session = sessionEntity)
                 }
             }
         } else {
