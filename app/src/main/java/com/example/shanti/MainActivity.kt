@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                         override fun <T : ViewModel> create(modelClass: Class<T>): T {
                             if (modelClass.isAssignableFrom(BookSessionViewModel::class.java)) {
                                 @Suppress("UNCHECKED_CAST")
-                                return BookSessionViewModel(trainersDatabase!!) as T
+                                return BookSessionViewModel(trainersDatabase!!, sessionsDatabase!!, homeScreenViewModel) as T
                             }
                             throw IllegalArgumentException("Unknown ViewModel class")
                         }

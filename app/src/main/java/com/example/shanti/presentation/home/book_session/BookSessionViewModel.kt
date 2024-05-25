@@ -2,22 +2,37 @@ package com.example.shanti.presentation.home.book_session
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shanti.data.database.SessionDatabase
 import com.example.shanti.data.database.TrainerDatabase
+import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.data.entity.TrainerEntity
 import com.example.shanti.domain.model.PractiseType
+import com.example.shanti.domain.repository.SessionRepository
 import com.example.shanti.domain.repository.TrainerRepository
+import com.example.shanti.presentation.home.HomeScreenViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class BookSessionViewModel(database: TrainerDatabase): ViewModel() {
-    private var trainerDao = database.trainerDao()
-    private val repository: TrainerRepository = TrainerRepository(this, trainerDao!!)
+class BookSessionViewModel(trainerDatabase: TrainerDatabase, sessionDatabase: SessionDatabase, homeScreenViewModel: HomeScreenViewModel): ViewModel() {
+    private var trainerDao = trainerDatabase.trainerDao()
+    private var sessionDao = sessionDatabase.sessionDao()
+    private val trainerRepository: TrainerRepository = TrainerRepository(this, trainerDao!!)
+    private val sessionRepository: SessionRepository = SessionRepository(homeScreenViewModel, sessionDao!!)
+
+    // Used only when Trainer Database is created
     fun init(){
-        repository.init()
+        trainerRepository.init()
+    }
+
+    fun insertSession(sessionEntity: SessionEntity){
+        viewModelScope.launch {
+            sessionRepository.insertSession(sessionEntity)
+        }
     }
 
     var selectedPractiseType = MutableStateFlow<PractiseType?>(PractiseType.YOGA)
@@ -26,7 +41,7 @@ class BookSessionViewModel(database: TrainerDatabase): ViewModel() {
 
     val trainersByPractiseType: StateFlow<List<TrainerEntity>> = selectedPractiseType
         .flatMapLatest { practiseType ->
-            practiseType?.let { repository.getTrainersByPractiseType(it) } ?: flowOf(emptyList())
+            practiseType?.let { trainerRepository.getTrainersByPractiseType(it) } ?: flowOf(emptyList())
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun selectPractiseType(practiseType: PractiseType) {

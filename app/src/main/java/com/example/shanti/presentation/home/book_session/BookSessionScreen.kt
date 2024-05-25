@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,14 +36,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.shanti.common.Constants
 import com.example.shanti.components.PractiseTypeListSheet
 import com.example.shanti.components.TrainerListSheet
+import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.domain.model.PractiseType
+import com.example.shanti.domain.model.Status
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -126,7 +134,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
             Column(
                 modifier = Modifier
                     .padding(contentPadding)
-                    .padding(horizontal = 12.dp)
+                    .padding(horizontal = 24.dp)
             ) {
 
                 Row(
@@ -238,6 +246,36 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     }
                 }
 
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = {
+                        scope.launch {
+                            withContext(Dispatchers.Default){
+                                // Getting the name and the surname from the selectedTrainer
+                                val trainerNameParts = selectedTrainer.split(" ", limit = 2)
+                                val trainerName = trainerNameParts[0]
+                                val trainerSurname = if (trainerNameParts.size > 1) trainerNameParts[1] else ""
+
+                                // Create the session
+                                val sessionEntity = SessionEntity(dateTime = localDateToDate(pickedDate),
+                                    time = formattedTime,
+                                    trainerName = trainerName,
+                                    trainerSurname = trainerSurname,
+                                    status = defineStatus(localDateToDate(pickedDate),pickedTime),
+                                    practiseType = selectedPractiseType,
+                                    urlMeet = Constants.URL_GOOGLE_MEET)
+
+                                viewModel.insertSession(sessionEntity = sessionEntity)
+                            }
+                        }
+
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text("Book Session", style = MaterialTheme.typography.headlineMedium)
+                }
+
             }
     }
 
@@ -266,6 +304,28 @@ private fun showTimePickerDialog(context: android.content.Context, initialTime: 
         { _, selectedHour, selectedMinute ->
         onTimeSelected(selectedHour, selectedMinute)
     }, hour, minute, true).show()
+}
+
+private fun localDateToDate(localDate: LocalDate): Date {
+    val localDateTime = localDate.atStartOfDay()
+    val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
+    return Date.from(instant)
+}
+
+private fun defineStatus(pickedDate: Date, pickedTime: LocalTime): Status {
+    val todayDate = Date()
+    val actualTime = LocalTime.now()
+    var result = Status.FUTURE
+    if(pickedDate < todayDate){
+        result = Status.PASSED
+    } else if (pickedDate == todayDate){
+        if(pickedTime < actualTime){
+            result = Status.PASSED
+        }
+    }
+
+    return result
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

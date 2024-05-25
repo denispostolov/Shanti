@@ -10,6 +10,7 @@ class HomeScreenViewModel(database: SessionDatabase): ViewModel() {
     var sessions = repository.sessions
         private set
 
+    // Used only when Session Database is created
     fun init(){
         repository.init()
     }

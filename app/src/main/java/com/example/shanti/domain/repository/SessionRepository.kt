@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
+import com.example.shanti.common.Constants
 
 
 class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao) {
@@ -30,7 +31,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         trainerSurname = "Parapallo",
                         status = Status.PASSED,
                         practiseType = PractiseType.YOGA,
-                        urlMeet = "https://meet.google.com/ube-qubu-ahe"
+                        urlMeet = Constants.URL_GOOGLE_MEET
                     ),
                     SessionEntity(
                         dateTime = Date(),
@@ -39,7 +40,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         trainerSurname = "Spuno",
                         status = Status.PASSED,
                         practiseType = PractiseType.MEDITATION,
-                        urlMeet = "https://meet.google.com/ube-qubu-ahe"
+                        urlMeet = Constants.URL_GOOGLE_MEET
                     ),
                     SessionEntity(
                         dateTime = Date(),
@@ -48,7 +49,7 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                         trainerSurname = "Bianchetti",
                         status = Status.CANCELED,
                         practiseType = PractiseType.BOTH,
-                        urlMeet = "https://meet.google.com/ube-qubu-ahe"
+                        urlMeet = Constants.URL_GOOGLE_MEET
                     )
 
                 )
@@ -59,6 +60,10 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
                 }
             }
         }
+    }
+
+    suspend fun insertSession(sessionEntity: SessionEntity){
+        dao.insert(sessionEntity)
     }
 
 }
