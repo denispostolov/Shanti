@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.shanti.common.Constants
 import com.example.shanti.components.PractiseTypeListSheet
+import com.example.shanti.components.SimpleClearBookingDialog
 import com.example.shanti.components.TrainerListSheet
 import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.domain.model.PractiseType
@@ -49,7 +50,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -126,7 +126,9 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
     Scaffold(
         topBar = {
             BookSessionTopBar(
-                onDeleteButtonClick = {}
+                onDeleteButtonClick = {
+                    viewModel.openClearBookingDialog = true
+                }
             )
         }
     ) { contentPadding ->
@@ -277,13 +279,22 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                 }
 
             }
+
+        if (viewModel.openClearBookingDialog) {
+            SimpleClearBookingDialog(viewModel = viewModel) {
+                viewModel.openClearBookingDialog = false
+                pickedDate = LocalDate.now()
+                pickedTime = LocalTime.now()
+                selectedPractiseType = PractiseType.YOGA
+                selectedTrainer = ""
+            }
+        }
     }
 
 }
 
 
 private fun showDatePickerDialog(context: android.content.Context, initialDate: LocalDate, onDateSelected: (Int, Int, Int) -> Unit) {
-    val calendar = Calendar.getInstance()
     val year = initialDate.year
     val month = initialDate.monthValue - 1 // Month is 0-based in Calendar
     val day = initialDate.dayOfMonth
@@ -342,7 +353,7 @@ private fun BookSessionTopBar(
         actions = {
             IconButton(onClick = onDeleteButtonClick) {
                 Icon(
-                    imageVector = Icons.Default.Delete,
+                    imageVector = Icons.Default.Clear,
                     contentDescription = "Delete Your Progress in Booking Session"
                 )
             }

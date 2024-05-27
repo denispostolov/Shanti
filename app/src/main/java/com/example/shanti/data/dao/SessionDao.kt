@@ -17,7 +17,7 @@ interface SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(session: SessionEntity)
 
-    @Query("SELECT * FROM SessionEntity")
+    @Query("SELECT * FROM SessionEntity ORDER BY dateTime DESC, time ASC")
     fun getAllSessions(): Flow<List<SessionEntity>>
 
     @Query("DELETE FROM SessionEntity")

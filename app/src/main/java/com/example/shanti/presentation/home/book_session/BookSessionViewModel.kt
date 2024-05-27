@@ -1,5 +1,8 @@
 package com.example.shanti.presentation.home.book_session
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shanti.data.database.SessionDatabase
@@ -43,6 +46,8 @@ class BookSessionViewModel(trainerDatabase: TrainerDatabase, sessionDatabase: Se
         .flatMapLatest { practiseType ->
             practiseType?.let { trainerRepository.getTrainersByPractiseType(it) } ?: flowOf(emptyList())
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    var openClearBookingDialog by mutableStateOf(false)
 
     fun selectPractiseType(practiseType: PractiseType) {
         selectedPractiseType.value = practiseType
