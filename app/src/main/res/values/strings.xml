@@ -3,4 +3,5 @@
     <string name="web_client_id">54984544240-ui9e50jhqbf99h259hg8mjq3timp6af8.apps.googleusercontent.com</string>
     <string name="welcome_to_shanti">Welcome to Shanti!</string>
     <string name="sign_in">Sign In to continue</string>
+    <string name="book_session_clear_dialog">Are you sure you want to reset the fields?</string>
 </resources>

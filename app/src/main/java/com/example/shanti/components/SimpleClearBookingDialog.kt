@@ -19,8 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.shanti.R
 import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,7 +59,7 @@ fun SimpleClearBookingDialog(
                         )
                     }
                     Text(
-                        text = "Are you sure you want to clear the Booking?",
+                        text = stringResource(R.string.book_session_clear_dialog),
                         style = MaterialTheme.typography.headlineMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.align(alignment = Alignment.CenterHorizontally)

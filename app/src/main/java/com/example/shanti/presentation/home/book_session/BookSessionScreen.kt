@@ -2,6 +2,7 @@ package com.example.shanti.presentation.home.book_session
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -57,6 +62,7 @@ import java.util.Date
 fun BookSessionScreen(viewModel: BookSessionViewModel) {
 
     val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     var pickedDate by remember { mutableStateOf(LocalDate.now())}
     var pickedTime by remember { mutableStateOf(LocalTime.now())}
@@ -71,7 +77,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
     val formattedTime by remember {
         derivedStateOf {
             DateTimeFormatter
-                .ofPattern("hh:mm")
+                .ofPattern("HH:mm")
                 .format(pickedTime)
         }
     }
@@ -130,7 +136,8 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     viewModel.openClearBookingDialog = true
                 }
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { contentPadding ->
 
             Column(
@@ -253,22 +260,34 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                 Button(
                     onClick = {
                         scope.launch {
-                            withContext(Dispatchers.Default){
-                                // Getting the name and the surname from the selectedTrainer
-                                val trainerNameParts = selectedTrainer.split(" ", limit = 2)
-                                val trainerName = trainerNameParts[0]
-                                val trainerSurname = if (trainerNameParts.size > 1) trainerNameParts[1] else ""
+                            val snackbarResult = snackbarHostState.showSnackbar(
+                                message = "Booking session...",
+                                actionLabel = "Undo",
+                                duration = SnackbarDuration.Short
+                            )
+                            if(snackbarResult == SnackbarResult.Dismissed) {
+                                withContext(Dispatchers.Default){
+                                    // Getting the name and the surname from the selectedTrainer
+                                    val trainerNameParts = selectedTrainer.split(" ", limit = 2)
+                                    val trainerName = trainerNameParts[0]
+                                    val trainerSurname = if (trainerNameParts.size > 1) trainerNameParts[1] else ""
 
-                                // Create the session
-                                val sessionEntity = SessionEntity(dateTime = localDateToDate(pickedDate),
-                                    time = formattedTime,
-                                    trainerName = trainerName,
-                                    trainerSurname = trainerSurname,
-                                    status = defineStatus(localDateToDate(pickedDate),pickedTime),
-                                    practiseType = selectedPractiseType,
-                                    urlMeet = Constants.URL_GOOGLE_MEET)
+                                    // Create the session
+                                    val sessionEntity = SessionEntity(dateTime = localDateToDate(pickedDate),
+                                        time = formattedTime,
+                                        trainerName = trainerName,
+                                        trainerSurname = trainerSurname,
+                                        status = defineStatus(localDateToDate(pickedDate),pickedTime),
+                                        practiseType = selectedPractiseType,
+                                        urlMeet = Constants.URL_GOOGLE_MEET)
 
-                                viewModel.insertSession(sessionEntity = sessionEntity)
+                                    viewModel.insertSession(sessionEntity = sessionEntity)
+
+                                    // Show Toast notification
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(context, "Session booked successfully!", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                             }
                         }
 
