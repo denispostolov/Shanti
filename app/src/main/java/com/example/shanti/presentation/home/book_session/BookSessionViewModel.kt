@@ -40,7 +40,6 @@ class BookSessionViewModel(trainerDatabase: TrainerDatabase, sessionDatabase: Se
 
     var selectedPractiseType = MutableStateFlow<PractiseType?>(PractiseType.YOGA)
         private set
-    //val selectedPractiseType: StateFlow<PractiseType?> = _selectedPractiseType
 
     val trainersByPractiseType: StateFlow<List<TrainerEntity>> = selectedPractiseType
         .flatMapLatest { practiseType ->

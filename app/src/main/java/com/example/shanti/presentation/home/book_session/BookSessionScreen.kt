@@ -42,6 +42,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.shanti.common.Constants
+import com.example.shanti.common.defineStatus
+import com.example.shanti.common.getTrainerNameAndSurnameFromFullName
+import com.example.shanti.common.localDateToDate
+import com.example.shanti.common.showDatePickerDialog
+import com.example.shanti.common.showTimePickerDialog
 import com.example.shanti.components.PractiseTypeListSheet
 import com.example.shanti.components.SimpleClearBookingDialog
 import com.example.shanti.components.TrainerListSheet
@@ -101,7 +106,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
         practiseTypes = practiseTypes,
         onDismissRequest = {isPractiseTypeSheetOpen = false},
         onPractiseTypeClicked = { practiseType ->
-            // Get all the trainers specific for practiseType
+            // Update selectedPractiseType
             viewModel.selectPractiseType(practiseType)
             // Reset selected trainer
             selectedTrainer = ""
@@ -268,9 +273,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                             if(snackbarResult == SnackbarResult.Dismissed) {
                                 withContext(Dispatchers.Default){
                                     // Getting the name and the surname from the selectedTrainer
-                                    val trainerNameParts = selectedTrainer.split(" ", limit = 2)
-                                    val trainerName = trainerNameParts[0]
-                                    val trainerSurname = if (trainerNameParts.size > 1) trainerNameParts[1] else ""
+                                    val (trainerName, trainerSurname) = getTrainerNameAndSurnameFromFullName(selectedTrainer)
 
                                     // Create the session
                                     val sessionEntity = SessionEntity(dateTime = localDateToDate(pickedDate),
@@ -312,51 +315,6 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
 
 }
 
-
-private fun showDatePickerDialog(context: android.content.Context, initialDate: LocalDate, onDateSelected: (Int, Int, Int) -> Unit) {
-    val year = initialDate.year
-    val month = initialDate.monthValue - 1 // Month is 0-based in Calendar
-    val day = initialDate.dayOfMonth
-
-    DatePickerDialog(
-        context,
-        { _, selectedYear, selectedMonth, selectedDay ->
-        onDateSelected(selectedYear, selectedMonth, selectedDay)
-    }, year, month, day).show()
-}
-
-private fun showTimePickerDialog(context: android.content.Context, initialTime: LocalTime, onTimeSelected: (Int, Int) -> Unit) {
-    val hour = initialTime.hour
-    val minute = initialTime.minute
-
-    TimePickerDialog(
-        context,
-        { _, selectedHour, selectedMinute ->
-        onTimeSelected(selectedHour, selectedMinute)
-    }, hour, minute, true).show()
-}
-
-private fun localDateToDate(localDate: LocalDate): Date {
-    val localDateTime = localDate.atStartOfDay()
-    val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
-    return Date.from(instant)
-}
-
-private fun defineStatus(pickedDate: Date, pickedTime: LocalTime): Status {
-    val todayDate = Date()
-    val actualTime = LocalTime.now()
-    var result = Status.FUTURE
-    if(pickedDate < todayDate){
-        result = Status.PASSED
-    } else if (pickedDate == todayDate){
-        if(pickedTime < actualTime){
-            result = Status.PASSED
-        }
-    }
-
-    return result
-
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
