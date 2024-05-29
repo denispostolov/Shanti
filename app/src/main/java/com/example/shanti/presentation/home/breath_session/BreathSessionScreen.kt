@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +37,9 @@ import com.example.shanti.components.CircularSlider
 import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.Purple80
 import kotlinx.coroutines.delay
+import androidx.compose.runtime.*
+
+
 
 //TODO: Check the timer and the method onEnd; it doesn't work correctly
 @Composable
@@ -149,11 +153,33 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
                 textAlign = TextAlign.Center
             )
         }
-        Text(
-            text = "Tempo rimanente: ${remainingTime}s",
-            modifier = Modifier.align(Alignment.TopCenter),
-            style = MaterialTheme.typography.titleLarge,
-            color = Color.Black
+//        Text(
+//            text = "Tempo rimanente: ${remainingTime}s",
+//            modifier = Modifier.align(Alignment.TopCenter),
+//            style = MaterialTheme.typography.titleLarge,
+//            color = Color.Black
+//        )
+        LinearProgressTimer(duration = duration, remainingTime = remainingTime)
+    }
+}
+
+@Composable
+fun LinearProgressTimer(duration: Int, remainingTime: Int) {
+    val progress = remember(remainingTime) { 1f - (remainingTime.toFloat() / duration) }
+
+    Column(
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
+        LinearProgressIndicator(
+            progress = progress,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(10.dp)
+                .padding(horizontal = 16.dp),
+            color = Purple40,
         )
     }
 }
