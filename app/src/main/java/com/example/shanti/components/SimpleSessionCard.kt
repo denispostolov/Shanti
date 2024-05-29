@@ -1,6 +1,7 @@
 package com.example.shanti.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,8 @@ import com.example.shanti.ui.theme.color1
 
 @Composable
 fun SimpleSessionCard(
-    session: SessionEntity
+    session: SessionEntity,
+    onClick: (session: SessionEntity) -> Unit
 ) {
 
     val imageRes = when (session.practiseType) {
@@ -39,6 +41,7 @@ fun SimpleSessionCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
+            .clickable { onClick(session) }
     ) {
         Row(
             modifier = Modifier

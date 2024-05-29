@@ -106,7 +106,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
         practiseTypes = practiseTypes,
         onDismissRequest = {isPractiseTypeSheetOpen = false},
         onPractiseTypeClicked = { practiseType ->
-            // Update selectedPractiseType
+            // Update the selectedPractiseType in order to get the updated list of trainers
             viewModel.selectPractiseType(practiseType)
             // Reset selected trainer
             selectedTrainer = ""
@@ -255,7 +255,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     IconButton(onClick = { isTrainerSheetOpen = true }) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Select Practise Type"
+                            contentDescription = "Select Trainer"
                         )
                     }
                 }
@@ -297,7 +297,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
-                    Text("Book Session", style = MaterialTheme.typography.headlineMedium)
+                    Text("Book Session", style = MaterialTheme.typography.headlineSmall)
                 }
 
             }

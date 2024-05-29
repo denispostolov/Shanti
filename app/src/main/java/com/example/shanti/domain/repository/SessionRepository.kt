@@ -66,4 +66,8 @@ class SessionRepository(val viewModel: HomeScreenViewModel, val dao: SessionDao)
         dao.insert(sessionEntity)
     }
 
+    suspend fun deleteSession(sessionEntity: SessionEntity){
+        dao.deleteSession(sessionEntity)
+    }
+
 }

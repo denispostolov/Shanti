@@ -4,4 +4,5 @@
     <string name="welcome_to_shanti">Welcome to Shanti!</string>
     <string name="sign_in">Sign In to continue</string>
     <string name="book_session_clear_dialog">Are you sure you want to reset the fields?</string>
+    <string name="homescreen_delete_session_dialog">Are you sure you want to delete this session?</string>
 </resources>
