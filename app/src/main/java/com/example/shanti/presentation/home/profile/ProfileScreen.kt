@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.example.shanti.R
 import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
 import com.example.shanti.session.SessionManager
@@ -35,7 +37,7 @@ fun ProfileScreen(googleAuthUIClient: GoogleAuthUIClient, sessionManager: Sessio
     ) {
         Image(
             painter = rememberAsyncImagePainter(user?.profilePictureUrl),
-            contentDescription = "Profile Picture",
+            contentDescription = stringResource(R.string.profile_picture),
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape),
@@ -58,7 +60,7 @@ fun ProfileScreen(googleAuthUIClient: GoogleAuthUIClient, sessionManager: Sessio
             },
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
         ) {
-            Text(text = "Sign Out", color = MaterialTheme.colorScheme.onError)
+            Text(text = stringResource(R.string.sign_out), color = MaterialTheme.colorScheme.onError)
         }
     }
 }

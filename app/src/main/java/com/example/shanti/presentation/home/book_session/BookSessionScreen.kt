@@ -1,7 +1,5 @@
 package com.example.shanti.presentation.home.book_session
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,7 +38,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.shanti.R
 import com.example.shanti.common.Constants
 import com.example.shanti.common.defineStatus
 import com.example.shanti.common.getTrainerNameAndSurnameFromFullName
@@ -52,15 +52,12 @@ import com.example.shanti.components.SimpleClearBookingDialog
 import com.example.shanti.components.TrainerListSheet
 import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.domain.model.PractiseType
-import com.example.shanti.domain.model.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -173,7 +170,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     }) {
                         Icon(
                             imageVector = Icons.Default.DateRange,
-                            contentDescription = "Select Date"
+                            contentDescription = stringResource(R.string.select_date)
                         )
                     }
                 }
@@ -181,7 +178,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Select Time",
+                    text = stringResource(R.string.select_time),
                     style = MaterialTheme.typography.bodySmall
                 )
 
@@ -207,13 +204,13 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     }) {
                         Icon(
                             imageVector = Icons.Default.Edit,
-                            contentDescription = "Select Time"
+                            contentDescription = stringResource(R.string.select_time)
                         )
                     }
                 }
 
                 Text(
-                    text = "Select Type of Practise",
+                    text = stringResource(R.string.select_type_of_practise),
                     style = MaterialTheme.typography.bodySmall
                 )
                 Row(
@@ -230,7 +227,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     IconButton(onClick = { isPractiseTypeSheetOpen = true }) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Select Practise Type"
+                            contentDescription = stringResource(R.string.select_type_of_practise)
                         )
                     }
                 }
@@ -238,7 +235,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Select Trainer",
+                    text = stringResource(R.string.select_trainer),
                     style = MaterialTheme.typography.bodySmall
                 )
                 Row(
@@ -255,7 +252,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     IconButton(onClick = { isTrainerSheetOpen = true }) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Select Trainer"
+                            contentDescription = stringResource(R.string.select_trainer)
                         )
                     }
                 }
@@ -288,7 +285,8 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
 
                                     // Show Toast notification
                                     withContext(Dispatchers.Main) {
-                                        Toast.makeText(context, "Session booked successfully!", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context,
+                                            context.getString(R.string.session_booked_successfully), Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             }
@@ -297,7 +295,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                     },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
-                    Text("Book Session", style = MaterialTheme.typography.headlineSmall)
+                    Text(stringResource(R.string.book_session_button_text), style = MaterialTheme.typography.headlineMedium)
                 }
 
             }
@@ -324,14 +322,14 @@ private fun BookSessionTopBar(
     TopAppBar(
         title = {
             Text(
-                text = "Book Session",
+                text = stringResource(R.string.book_session),
                 style = MaterialTheme.typography.headlineSmall
             )},
         actions = {
             IconButton(onClick = onDeleteButtonClick) {
                 Icon(
                     imageVector = Icons.Default.Clear,
-                    contentDescription = "Delete Your Progress in Booking Session"
+                    contentDescription = stringResource(R.string.delete_your_progress_in_booking_session)
                 )
             }
         }

@@ -24,29 +24,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.shanti.R
 import com.example.shanti.components.CircularSlider
 import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.Purple80
 import kotlinx.coroutines.delay
-import androidx.compose.runtime.*
 
 
 
-//TODO: Check the timer and the method onEnd; it doesn't work correctly
 @Composable
 fun BreathSessionScreen() {
     var duration by remember { mutableStateOf(30f) }
     var isAnimating by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
     val vibrator = context.getSystemService(Vibrator::class.java)
@@ -60,7 +58,7 @@ fun BreathSessionScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Durata (secondi): ${duration.toInt()}",
+                text = stringResource(R.string.breath_session_duration_text, duration.toInt()),
                 style = MaterialTheme.typography.headlineMedium
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -76,7 +74,7 @@ fun BreathSessionScreen() {
                 Button(
                     colors = ButtonDefaults.buttonColors(containerColor = Purple40),
                     onClick = { isAnimating = true }) {
-                    Text("Avvia")
+                    Text(stringResource(R.string.breath_session_start_button_text), style = MaterialTheme.typography.headlineMedium)
                 }
             }
         }
@@ -147,18 +145,12 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = if (isBreathingIn) "Breath In" else "Breath Out",
+                text = if (isBreathingIn) stringResource(R.string.breath_in_text) else stringResource(R.string.breath_out_text),
                 fontSize = 24.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center
             )
         }
-//        Text(
-//            text = "Tempo rimanente: ${remainingTime}s",
-//            modifier = Modifier.align(Alignment.TopCenter),
-//            style = MaterialTheme.typography.titleLarge,
-//            color = Color.Black
-//        )
         LinearProgressTimer(duration = duration, remainingTime = remainingTime)
     }
 }

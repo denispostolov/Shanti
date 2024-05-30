@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.shanti.R
@@ -74,37 +75,37 @@ fun SimpleSessionCard(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(text = "Trainer", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = stringResource(R.string.trainer_card), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     Text(text = session.trainerFullName(), color = MaterialTheme.colorScheme.onPrimary)
                 }
                 Row(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(text = "Date:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = stringResource(R.string.date), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     Text(text = session.formattedDate(), color = MaterialTheme.colorScheme.onPrimary)
-                    Text(text = "at:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = stringResource(R.string.at), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     Text(text = session.time, color = MaterialTheme.colorScheme.onPrimary)
                 }
                 Row(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(text = "Status:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = stringResource(R.string.status), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     Text(text = session.status.toString(), color = MaterialTheme.colorScheme.onPrimary)
                 }
                 Row(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(text = "Type of practise:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = stringResource(R.string.type_of_practise), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     Text(text = session.practiseType.toString(), color = MaterialTheme.colorScheme.onPrimary)
                 }
                 Row(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(text = "Google meet room:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                    Text(text = stringResource(R.string.google_meet_room), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
                     if (session.status == Status.FUTURE) {
                         ClickableLinkText(url = session.urlMeet, colorText = MaterialTheme.colorScheme.onPrimary)
                     } else {

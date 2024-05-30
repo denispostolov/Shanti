@@ -2,19 +2,9 @@ package com.example.shanti.data.database
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.shanti.data.dao.SessionDao
-import com.example.shanti.data.dao.TrainerDao
 import com.example.shanti.data.entity.SessionEntity
-import com.example.shanti.domain.model.PractiseType
-import com.example.shanti.domain.model.Status
-import com.example.shanti.presentation.home.HomeScreenViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.Date
 
 @Database(
     entities = [SessionEntity::class],

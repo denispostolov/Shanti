@@ -71,7 +71,6 @@ fun OnboardScreen(
                 .fillMaxWidth()
                 .background(color = Color.White),
             rootNavHostController = rootNavHostController,
-            //appSettings = appSettings
             sessionManager = sessionManager
         )
 }

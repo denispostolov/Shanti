@@ -75,7 +75,7 @@ fun SimpleDeleteSessionDialog(
                             viewModel.openSessionDeleteDialog = false
                         }
                     ) {
-                        Text("No, I'm not", color = Color.Red)
+                        Text(stringResource(id = R.string.not_sure_text), color = Color.Red)
                     }
                     TextButton(
                         onClick = {
@@ -83,7 +83,7 @@ fun SimpleDeleteSessionDialog(
                             deleteSession()
                         }
                     ) {
-                        Text("Yes, I'm sure")
+                        Text(stringResource(id = R.string.sure_text))
                     }
                 }
             }

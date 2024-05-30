@@ -3,19 +3,14 @@ package com.example.shanti.domain.repository
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.shanti.data.dao.TrainerDao
-import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.data.entity.TrainerEntity
 import com.example.shanti.domain.model.Gender
 import com.example.shanti.domain.model.PractiseType
-import com.example.shanti.domain.model.Status
 import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Date
 
 class TrainerRepository(val viewModel: BookSessionViewModel, val dao: TrainerDao) {
     var trainers = dao.getAll()

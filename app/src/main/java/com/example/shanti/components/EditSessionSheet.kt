@@ -188,7 +188,13 @@ fun EditSessionSheet(
 
                             // Show Toast notification
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(context, "Session updated successfully!", Toast.LENGTH_SHORT).show()
+                                if(updatedSession.status != session.status){
+                                    Toast.makeText(context, "Session updated successfully!", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    // This is the case where user sets a session has passed but the session is booked for a future date
+                                    Toast.makeText(context, "ATTENTION: You can't mark a future session as passed", Toast.LENGTH_LONG).show()
+                                }
+
                             }
                         }
                     }) {

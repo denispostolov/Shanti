@@ -1,5 +1,6 @@
 package com.example.shanti.presentation.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,23 +18,26 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieConstants
+import com.example.shanti.R
 import com.example.shanti.components.EditSessionSheet
 import com.example.shanti.components.SimpleDeleteSessionDialog
 import com.example.shanti.components.SimpleLottieFiles
 import com.example.shanti.components.SimpleSessionCard
 import com.example.shanti.data.entity.SessionEntity
-import com.example.shanti.presentation.home.book_session.BookSessionViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    homeScreenViewModel: HomeScreenViewModel,
-    bookSessionViewModel: BookSessionViewModel
+    homeScreenViewModel: HomeScreenViewModel
 ) {
+    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val sessions = homeScreenViewModel.sessions.collectAsState(null)
     val sheetState = rememberModalBottomSheetState()
@@ -47,7 +51,7 @@ fun HomeScreen(
             session = selectedSession!!,
             onDismissRequest = { isEditSessionSheetOpen = false },
             onSessionUpdate = { updatedSession ->
-                bookSessionViewModel.insertSession(updatedSession)
+                homeScreenViewModel.updateSession(updatedSession)
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
                     if (!sheetState.isVisible) {
                         isEditSessionSheetOpen = false
@@ -55,7 +59,6 @@ fun HomeScreen(
                 }
             },
             onSessionDelete = {
-                //bookSessionViewModel.insertSession(session)
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
                     if (!sheetState.isVisible) {
                         isEditSessionSheetOpen = false
@@ -103,6 +106,15 @@ fun HomeScreen(
         SimpleDeleteSessionDialog(viewModel = homeScreenViewModel) {
             homeScreenViewModel.openSessionDeleteDialog = false
             homeScreenViewModel.deleteSession(selectedSession!!)
+            scope.launch {
+                withContext(Dispatchers.Main){
+                    // Show Toast notification
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context,
+                            context.getString(R.string.session_deleted_successfully), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 }

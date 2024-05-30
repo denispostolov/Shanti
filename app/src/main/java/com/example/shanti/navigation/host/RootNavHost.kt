@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.shanti.navigation.graph.Graph
-import com.example.shanti.presentation.home.HomeScreen
 import com.example.shanti.presentation.home.HomeScreenContent
 import com.example.shanti.presentation.home.HomeScreenViewModel
 import com.example.shanti.presentation.home.book_session.BookSessionViewModel

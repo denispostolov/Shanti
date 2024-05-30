@@ -76,7 +76,7 @@ fun SimpleClearBookingDialog(
                             viewModel.openClearBookingDialog = false
                         }
                     ) {
-                        Text("No, I'm not", color = Color.Red)
+                        Text(stringResource(R.string.not_sure_text), color = Color.Red)
                     }
                     TextButton(
                         onClick = {
@@ -84,7 +84,7 @@ fun SimpleClearBookingDialog(
                             clearBooking()
                         }
                     ) {
-                        Text("Yes, I'm sure")
+                        Text(stringResource(R.string.sure_text))
                     }
                 }
             }

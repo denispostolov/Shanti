@@ -23,6 +23,12 @@ class HomeScreenViewModel(database: SessionDatabase): ViewModel() {
         repository.init()
     }
 
+    fun updateSession(sessionEntity: SessionEntity){
+        viewModelScope.launch {
+            repository.insertSession(sessionEntity)
+        }
+    }
+
     fun deleteSession(sessionEntity: SessionEntity){
         viewModelScope.launch {
             repository.deleteSession(sessionEntity)

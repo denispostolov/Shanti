@@ -10,15 +10,10 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -30,6 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import com.example.shanti.navigation.screen.HomeScreen
 import androidx.compose.material3.NavigationBar
+import androidx.compose.ui.res.stringResource
+import com.example.shanti.R
 import com.example.shanti.navigation.host.HomeNavHost
 import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 
@@ -44,9 +41,6 @@ fun HomeScreenContent(
     bookSessionViewModel: BookSessionViewModel
 ) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    val openDialog = remember { mutableStateOf(false) }
 
 
     val launcher = rememberLauncherForActivityResult(
@@ -65,8 +59,8 @@ fun HomeScreenContent(
                 content = {
                     NavigationBar {
                         NavigationBarItem(
-                            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-                            label = { Text("Home") },
+                            icon = { Icon(Icons.Filled.Home, contentDescription = stringResource(R.string.home)) },
+                            label = { Text(stringResource(R.string.home)) },
                             alwaysShowLabel = true,
                             selected = navBackStackEntry?.destination?.route == HomeScreen.Home.route,
                             onClick = {
@@ -74,8 +68,8 @@ fun HomeScreenContent(
                             }
                         )
                         NavigationBarItem(
-                            icon = { Icon(Icons.Filled.DateRange, contentDescription = "Book Session") },
-                            label = { Text("Book Session") },
+                            icon = { Icon(Icons.Filled.DateRange, contentDescription = stringResource(R.string.book_session)) },
+                            label = { Text(stringResource(R.string.book_session)) },
                             alwaysShowLabel = true,
                             selected = navBackStackEntry?.destination?.route == HomeScreen.BookSession.route,
                             onClick = {
@@ -83,8 +77,8 @@ fun HomeScreenContent(
                             }
                         )
                         NavigationBarItem(
-                            icon = { Icon(Icons.Filled.Face, contentDescription = "Breath Session") },
-                            label = { Text("Breath") },
+                            icon = { Icon(Icons.Filled.Face, contentDescription = stringResource(R.string.breath_session)) },
+                            label = { Text(stringResource(R.string.breath)) },
                             alwaysShowLabel = true,
                             selected = navBackStackEntry?.destination?.route == HomeScreen.BreathSession.route,
                             onClick = {
@@ -92,8 +86,8 @@ fun HomeScreenContent(
                             }
                         )
                         NavigationBarItem(
-                            icon = { Icon(Icons.Filled.AccountCircle, contentDescription = "Profile") },
-                            label = { Text("Profile") },
+                            icon = { Icon(Icons.Filled.AccountCircle, contentDescription = stringResource(R.string.profile)) },
+                            label = { Text(stringResource(R.string.profile)) },
                             selected = navBackStackEntry?.destination?.route == HomeScreen.Profile.route,
                             onClick = {
                                 navHostController.navigate(HomeScreen.Profile.route)
