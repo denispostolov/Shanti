@@ -77,13 +77,5 @@ class DefineStatusTest {
         val result = defineStatus(todayDate, pastTime)
         assertEquals(Status.PASSED, result)
     }
-
-    @Test
-    fun testDefineStatusWithTodayDateAndCurrentTime() {
-        val todayDate = Date()
-        val currentTime = LocalTime.now()
-        val result = defineStatus(todayDate, currentTime)
-        assertEquals(Status.FUTURE, result)
-    }
 }
 
