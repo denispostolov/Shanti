@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shanti.data.database.SessionDatabase
 import com.example.shanti.data.entity.SessionEntity
-import com.example.shanti.domain.repository.SessionRepository
+import com.example.shanti.data.repository.SessionRepository
 import kotlinx.coroutines.launch
 
 class HomeScreenViewModel(database: SessionDatabase): ViewModel() {

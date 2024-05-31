@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.shanti.data.entity.converter.DateTypeConverter
-import com.example.shanti.domain.model.PractiseType
-import com.example.shanti.domain.model.Status
+import com.example.shanti.data.model.PractiseType
+import com.example.shanti.data.model.Status
 import java.text.SimpleDateFormat
 import java.util.Date
 

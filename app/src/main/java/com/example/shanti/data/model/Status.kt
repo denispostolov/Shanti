@@ -1,4 +1,4 @@
-package com.example.shanti.domain.model
+package com.example.shanti.data.model
 
 enum class Status {
     PASSED,

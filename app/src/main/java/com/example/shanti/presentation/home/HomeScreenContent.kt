@@ -77,8 +77,8 @@ fun HomeScreenContent(
                             }
                         )
                         NavigationBarItem(
-                            icon = { Icon(Icons.Filled.Face, contentDescription = stringResource(R.string.breath_session)) },
-                            label = { Text(stringResource(R.string.breath)) },
+                            icon = { Icon(Icons.Filled.Face, contentDescription = stringResource(R.string.breathe_session)) },
+                            label = { Text(stringResource(R.string.breathe)) },
                             alwaysShowLabel = true,
                             selected = navBackStackEntry?.destination?.route == HomeScreen.BreathSession.route,
                             onClick = {

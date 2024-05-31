@@ -9,9 +9,9 @@ import com.example.shanti.data.database.SessionDatabase
 import com.example.shanti.data.database.TrainerDatabase
 import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.data.entity.TrainerEntity
-import com.example.shanti.domain.model.PractiseType
-import com.example.shanti.domain.repository.SessionRepository
-import com.example.shanti.domain.repository.TrainerRepository
+import com.example.shanti.data.model.PractiseType
+import com.example.shanti.data.repository.SessionRepository
+import com.example.shanti.data.repository.TrainerRepository
 import com.example.shanti.presentation.home.HomeScreenViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

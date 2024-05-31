@@ -20,8 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.shanti.R
 import com.example.shanti.data.entity.SessionEntity
-import com.example.shanti.domain.model.PractiseType
-import com.example.shanti.domain.model.Status
+import com.example.shanti.data.model.PractiseType
+import com.example.shanti.data.model.Status
 import com.example.shanti.ui.theme.Purple40
 import com.example.shanti.ui.theme.color1
 

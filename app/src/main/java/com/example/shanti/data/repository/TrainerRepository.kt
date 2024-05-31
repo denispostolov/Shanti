@@ -1,11 +1,11 @@
-package com.example.shanti.domain.repository
+package com.example.shanti.data.repository
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.shanti.data.dao.TrainerDao
 import com.example.shanti.data.entity.TrainerEntity
-import com.example.shanti.domain.model.Gender
-import com.example.shanti.domain.model.PractiseType
+import com.example.shanti.data.model.Gender
+import com.example.shanti.data.model.PractiseType
 import com.example.shanti.presentation.home.book_session.BookSessionViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

@@ -37,7 +37,7 @@ import com.example.shanti.common.localDateToDate
 import com.example.shanti.common.showDatePickerDialog
 import com.example.shanti.common.showTimePickerDialog
 import com.example.shanti.data.entity.SessionEntity
-import com.example.shanti.domain.model.Status
+import com.example.shanti.data.model.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

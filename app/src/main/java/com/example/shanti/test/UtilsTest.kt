@@ -2,7 +2,7 @@ package com.example.shanti.test
 
 import com.example.shanti.common.defineStatus
 import com.example.shanti.common.getTrainerNameAndSurnameFromFullName
-import com.example.shanti.domain.model.Status
+import com.example.shanti.data.model.Status
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 import java.time.LocalTime

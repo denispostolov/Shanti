@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.shanti.data.entity.TrainerEntity
-import com.example.shanti.domain.model.PractiseType
+import com.example.shanti.data.model.PractiseType
 import kotlinx.coroutines.flow.Flow
 
 @Dao

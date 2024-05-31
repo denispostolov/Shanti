@@ -5,10 +5,10 @@
     <string name="sign_in">Sign In to continue</string>
     <string name="book_session_clear_dialog">Are you sure you want to reset the fields?</string>
     <string name="homescreen_delete_session_dialog">Are you sure you want to delete this session?</string>
-    <string name="breath_session_start_button_text">Avvia</string>
-    <string name="breath_session_duration_text">Durata (secondi): %1$s</string>
-    <string name="breath_in_text">Breath In</string>
-    <string name="breath_out_text">Breath Out</string>
+    <string name="breath_session_start_button_text">Start</string>
+    <string name="breath_session_duration_text">Duration (seconds): %1$s</string>
+    <string name="breathe_in_text">Breathe In</string>
+    <string name="breathe_out_text">Breathe Out</string>
     <string name="session_deleted_successfully">Session deleted successfully!</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="not_sure_text">No, I\'m not</string>
@@ -34,7 +34,7 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="sign_out">Sign Out</string>
     <string name="home">Home</string>
-    <string name="breath_session">Breath Session</string>
-    <string name="breath">Breath</string>
+    <string name="breathe_session">Breathe Session</string>
+    <string name="breathe">Breathe</string>
     <string name="profile">Profile</string>
 </resources>

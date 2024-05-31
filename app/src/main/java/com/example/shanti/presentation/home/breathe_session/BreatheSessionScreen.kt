@@ -1,4 +1,4 @@
-package com.example.shanti.presentation.home.breath_session
+package com.example.shanti.presentation.home.breathe_session
 
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -42,7 +42,7 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun BreathSessionScreen() {
+fun BreatheSessionScreen() {
     var duration by remember { mutableStateOf(30f) }
     var isAnimating by remember { mutableStateOf(false) }
 
@@ -145,7 +145,7 @@ fun BreathingAnimation(duration: Int, onEnd: () -> Unit, vibrator: Vibrator) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = if (isBreathingIn) stringResource(R.string.breath_in_text) else stringResource(R.string.breath_out_text),
+                text = if (isBreathingIn) stringResource(R.string.breathe_in_text) else stringResource(R.string.breathe_out_text),
                 fontSize = 24.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center

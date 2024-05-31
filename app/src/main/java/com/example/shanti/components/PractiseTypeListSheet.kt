@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.shanti.domain.model.PractiseType
+import com.example.shanti.data.model.PractiseType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

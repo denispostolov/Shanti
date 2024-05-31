@@ -7,7 +7,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.CalendarContract
 import com.example.shanti.data.entity.SessionEntity
-import com.example.shanti.domain.model.Status
+import com.example.shanti.data.model.Status
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId

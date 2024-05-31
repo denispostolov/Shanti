@@ -50,11 +50,12 @@ import com.example.shanti.common.getTrainerNameAndSurnameFromFullName
 import com.example.shanti.common.localDateToDate
 import com.example.shanti.common.showDatePickerDialog
 import com.example.shanti.common.showTimePickerDialog
+import com.example.shanti.components.AddToCalendarButton
 import com.example.shanti.components.PractiseTypeListSheet
 import com.example.shanti.components.SimpleClearBookingDialog
 import com.example.shanti.components.TrainerListSheet
 import com.example.shanti.data.entity.SessionEntity
-import com.example.shanti.domain.model.PractiseType
+import com.example.shanti.data.model.PractiseType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -95,7 +96,7 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
     var selectedPractiseType by remember { mutableStateOf(PractiseType.YOGA) }
     var selectedTrainer by remember { mutableStateOf("") }
 
-    val practiseTypes = listOf(PractiseType.YOGA,PractiseType.MEDITATION, PractiseType.BOTH)
+    val practiseTypes = listOf(PractiseType.YOGA, PractiseType.MEDITATION, PractiseType.BOTH)
     val trainers by viewModel.trainersByPractiseType.collectAsState()
 
 
@@ -263,6 +264,18 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
+
+                // Getting the name and the surname from the selectedTrainer
+                val (trainerName, trainerSurname) = getTrainerNameAndSurnameFromFullName(selectedTrainer)
+                // Create the session
+                val sessionEntity = SessionEntity(dateTime = localDateToDate(pickedDate),
+                    time = formattedTime,
+                    trainerName = trainerName,
+                    trainerSurname = trainerSurname,
+                    status = defineStatus(localDateToDate(pickedDate),pickedTime),
+                    practiseType = selectedPractiseType,
+                    urlMeet = Constants.URL_GOOGLE_MEET)
+
                 Button(
                     onClick = {
                         scope.launch {
@@ -273,25 +286,8 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                             )
                             if(snackbarResult == SnackbarResult.Dismissed) {
                                 withContext(Dispatchers.Default){
-                                    // Getting the name and the surname from the selectedTrainer
-                                    val (trainerName, trainerSurname) = getTrainerNameAndSurnameFromFullName(selectedTrainer)
-
-                                    // Create the session
-                                    val sessionEntity = SessionEntity(dateTime = localDateToDate(pickedDate),
-                                        time = formattedTime,
-                                        trainerName = trainerName,
-                                        trainerSurname = trainerSurname,
-                                        status = defineStatus(localDateToDate(pickedDate),pickedTime),
-                                        practiseType = selectedPractiseType,
-                                        urlMeet = Constants.URL_GOOGLE_MEET)
 
                                     viewModel.insertSession(sessionEntity = sessionEntity)
-
-                                    // Combine date and time
-                                    val sessionStartCalendar = combineDateAndTime(sessionEntity.dateTime, sessionEntity.time)
-                                    val sessionEndCalendar = (sessionStartCalendar.clone() as Calendar).apply {
-                                        add(Calendar.HOUR, 1)  // Assuming the session lasts for 1 hour
-                                    }
 
                                     // Show Toast notification
                                     withContext(Dispatchers.Main) {
@@ -299,17 +295,6 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                                             context.getString(R.string.session_booked_successfully), Toast.LENGTH_SHORT).show()
                                     }
 
-                                    // Add the event to the calendar
-                                    val calendarIntent = Intent(Intent.ACTION_INSERT).apply {
-                                        data = CalendarContract.Events.CONTENT_URI
-                                        putExtra(CalendarContract.Events.TITLE, "Yoga/Meditation Session")
-                                        putExtra(CalendarContract.Events.DESCRIPTION, "Session of ${sessionEntity.practiseType.toString().lowercase()} with ${trainerName} ${trainerSurname}")
-                                        putExtra(CalendarContract.Events.EVENT_LOCATION, "Online")
-                                        putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, sessionStartCalendar.timeInMillis)
-                                        putExtra(CalendarContract.EXTRA_EVENT_END_TIME, sessionEndCalendar.timeInMillis) // Assuming the session lasts for 1 hour
-                                        putExtra(CalendarContract.Events.EVENT_TIMEZONE, sessionStartCalendar.timeZone.id)
-                                    }
-                                    context.startActivity(calendarIntent)
                                 }
                             }
                         }
@@ -319,6 +304,33 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
                 ) {
                     Text(stringResource(R.string.book_session_button_text), style = MaterialTheme.typography.headlineMedium)
                 }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                AddToCalendarButton(
+                    onClick = {
+                        scope.launch {
+                            val sessionStartCalendar = combineDateAndTime(sessionEntity.dateTime, sessionEntity.time)
+                            val sessionEndCalendar = (sessionStartCalendar.clone() as Calendar).apply {
+                                add(Calendar.HOUR, 1)  // Assuming the session lasts for 1 hour
+                            }
+
+                            // Add the event to the calendar
+                            val calendarIntent = Intent(Intent.ACTION_INSERT).apply {
+                                data = CalendarContract.Events.CONTENT_URI
+                                putExtra(CalendarContract.Events.TITLE, "Yoga/Meditation Session")
+                                putExtra(CalendarContract.Events.DESCRIPTION, "Session of ${sessionEntity.practiseType.toString().lowercase()} with ${trainerName} ${trainerSurname}")
+                                putExtra(CalendarContract.Events.EVENT_LOCATION, "Online")
+                                putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, sessionStartCalendar.timeInMillis)
+                                putExtra(CalendarContract.EXTRA_EVENT_END_TIME, sessionEndCalendar.timeInMillis) // Assuming the session lasts for 1 hour
+                                putExtra(CalendarContract.Events.EVENT_TIMEZONE, sessionStartCalendar.timeZone.id)
+                            }
+                            context.startActivity(calendarIntent)
+                        }
+
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
 
             }
 
