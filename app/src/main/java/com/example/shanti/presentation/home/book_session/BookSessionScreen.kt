@@ -1,5 +1,7 @@
 package com.example.shanti.presentation.home.book_session
 
+import android.content.Intent
+import android.provider.CalendarContract
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.shanti.R
 import com.example.shanti.common.Constants
+import com.example.shanti.common.combineDateAndTime
 import com.example.shanti.common.defineStatus
 import com.example.shanti.common.getTrainerNameAndSurnameFromFullName
 import com.example.shanti.common.localDateToDate
@@ -58,6 +61,7 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -283,11 +287,29 @@ fun BookSessionScreen(viewModel: BookSessionViewModel) {
 
                                     viewModel.insertSession(sessionEntity = sessionEntity)
 
+                                    // Combine date and time
+                                    val sessionStartCalendar = combineDateAndTime(sessionEntity.dateTime, sessionEntity.time)
+                                    val sessionEndCalendar = (sessionStartCalendar.clone() as Calendar).apply {
+                                        add(Calendar.HOUR, 1)  // Assuming the session lasts for 1 hour
+                                    }
+
                                     // Show Toast notification
                                     withContext(Dispatchers.Main) {
                                         Toast.makeText(context,
                                             context.getString(R.string.session_booked_successfully), Toast.LENGTH_SHORT).show()
                                     }
+
+                                    // Add the event to the calendar
+                                    val calendarIntent = Intent(Intent.ACTION_INSERT).apply {
+                                        data = CalendarContract.Events.CONTENT_URI
+                                        putExtra(CalendarContract.Events.TITLE, "Yoga/Meditation Session")
+                                        putExtra(CalendarContract.Events.DESCRIPTION, "Session of ${sessionEntity.practiseType.toString().lowercase()} with ${trainerName} ${trainerSurname}")
+                                        putExtra(CalendarContract.Events.EVENT_LOCATION, "Online")
+                                        putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, sessionStartCalendar.timeInMillis)
+                                        putExtra(CalendarContract.EXTRA_EVENT_END_TIME, sessionEndCalendar.timeInMillis) // Assuming the session lasts for 1 hour
+                                        putExtra(CalendarContract.Events.EVENT_TIMEZONE, sessionStartCalendar.timeZone.id)
+                                    }
+                                    context.startActivity(calendarIntent)
                                 }
                             }
                         }

@@ -8,7 +8,7 @@ import com.example.shanti.data.entity.TrainerEntity
 
 @Database(
     entities = [TrainerEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class TrainerDatabase: RoomDatabase() {

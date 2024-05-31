@@ -64,15 +64,15 @@ fun OnboardScreen(
         initialPage = 0
     )
 
-        OnBoardingPager(
-            item = items,
-            pagerState = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.White),
-            rootNavHostController = rootNavHostController,
-            sessionManager = sessionManager
-        )
+    OnBoardingPager(
+        item = items,
+        pagerState = pagerState,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.White),
+        rootNavHostController = rootNavHostController,
+        sessionManager = sessionManager
+    )
 }
 
 @ExperimentalPagerApi

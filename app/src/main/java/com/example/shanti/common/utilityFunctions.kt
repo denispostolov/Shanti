@@ -2,11 +2,16 @@ package com.example.shanti.common
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
+import android.provider.CalendarContract
+import com.example.shanti.data.entity.SessionEntity
 import com.example.shanti.domain.model.Status
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 
 
@@ -61,4 +66,21 @@ fun defineStatus(pickedDate: Date, pickedTime: LocalTime): Status {
 
     return result
 
+}
+// utility function for adding an event relative to the session in google Calendar
+fun combineDateAndTime(date: Date, time: String): Calendar {
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+
+    // Split the time string (assuming format "HH:mm")
+    val timeParts = time.split(":")
+    val hours = timeParts[0].toInt()
+    val minutes = timeParts[1].toInt()
+
+    // Set the time parts into the calendar
+    calendar.set(Calendar.HOUR_OF_DAY, hours)
+    calendar.set(Calendar.MINUTE, minutes)
+    calendar.set(Calendar.SECOND, 0)
+
+    return calendar
 }
