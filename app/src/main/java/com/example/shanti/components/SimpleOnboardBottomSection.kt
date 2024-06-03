@@ -10,8 +10,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.shanti.R
 import com.example.shanti.navigation.graph.Graph
 import com.example.shanti.session.SessionManager
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -43,7 +45,7 @@ fun SimpleOnboardBottomSection(
                         }
                 },
             ) {
-                Text(text = "Get started!")
+                Text(text = stringResource(R.string.get_started))
             }
         } else {
             TextButton(
@@ -52,7 +54,7 @@ fun SimpleOnboardBottomSection(
                         pagerState.animateScrollToPage(page = 2)
                     }
                 }) {
-                Text(text = "Skip")
+                Text(text = stringResource(R.string.skip))
             }
             Button(
                 onClick = {
@@ -60,7 +62,7 @@ fun SimpleOnboardBottomSection(
                         pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
                     }
                 }) {
-                Text(text = "Next")
+                Text(text = stringResource(R.string.next))
             }
         }
     }

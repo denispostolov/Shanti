@@ -5,21 +5,22 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.shanti.navigation.graph.Graph
-import com.example.shanti.presentation.home.HomeScreenContent
+import com.example.shanti.navigation.screen.HomeScreen
+import com.example.shanti.presentation.home.HomeScreen
 import com.example.shanti.presentation.home.HomeScreenViewModel
+import com.example.shanti.presentation.home.book_session.BookSessionScreen
 import com.example.shanti.presentation.home.book_session.BookSessionViewModel
-import com.example.shanti.presentation.onboard.OnboardScreen
+import com.example.shanti.presentation.home.breathe_session.BreatheSessionScreen
+import com.example.shanti.presentation.home.profile.ProfileScreen
 import com.example.shanti.presentation.signin.GoogleAuthUIClient
-import com.example.shanti.presentation.signin.SignInScreenContent
 import com.example.shanti.session.SessionManager
 
-
 @Composable
-fun RootNavHost(
-    modifier: Modifier = Modifier,
-    navHostController: NavHostController = rememberNavController(),
+fun HomeNavHost(
+    modifier: Modifier,
+    rootNavHostController: NavHostController,
+    navHostController: NavHostController,
     startDestination: String,
     googleAuthUIClient: GoogleAuthUIClient,
     sessionManager: SessionManager,
@@ -29,33 +30,33 @@ fun RootNavHost(
     NavHost(
         modifier = modifier,
         navController = navHostController,
-        route = Graph.ROOT,
+        route = Graph.HOME,
         startDestination = startDestination
     ) {
         composable(
-            route = Graph.ONBOARD
+            route = HomeScreen.Home.route
         ) {
-            OnboardScreen(
-                rootNavHostController = navHostController,
-                sessionManager = sessionManager
-            )
+            HomeScreen(homeScreenViewModel = homeScreenViewModel)
         }
         composable(
-            route = Graph.SIGNIN
+            route = HomeScreen.BookSession.route
         ) {
-            SignInScreenContent(rootNavHostController = navHostController, googleAuthUIClient = googleAuthUIClient, sessionManager = sessionManager)
+            BookSessionScreen(viewModel = bookSessionViewModel)
         }
         composable(
-            route = Graph.HOME
+            route = HomeScreen.BreathSession.route
         ) {
-
-            HomeScreenContent(
-                rootNavHostController = navHostController,
-                googleAuthUIClient = googleAuthUIClient,
+            BreatheSessionScreen()
+        }
+        composable(
+            route = HomeScreen.Profile.route
+        ) {
+            ProfileScreen(
+                googleAuthUIClient=googleAuthUIClient,
                 sessionManager = sessionManager,
-                homeScreenViewModel = homeScreenViewModel,
-                bookSessionViewModel = bookSessionViewModel
+                rootNavHostController = rootNavHostController
             )
         }
     }
+
 }

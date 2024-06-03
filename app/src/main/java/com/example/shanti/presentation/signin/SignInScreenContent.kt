@@ -51,7 +51,7 @@ fun SignInScreenContent(
             // Show sign-in success toast
             Toast.makeText(
                 context,
-                "Sign in successful",
+                "Hello ${googleAuthUIClient.getSignedInUser()?.username}!",
                 Toast.LENGTH_LONG
             ).show()
 

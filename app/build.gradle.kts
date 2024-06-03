@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
 }
 
 android {
@@ -61,11 +62,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    implementation("junit:junit:4.12")
+    implementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -85,4 +85,17 @@ dependencies {
 
     //Pager
     implementation ("com.google.accompanist:accompanist-pager:0.12.0")
+
+    // Room
+    val roomVersion = "2.5.1"
+    implementation (libs.androidx.room.ktx.v261)
+    kapt (libs.androidx.room.compiler.v261)
+    androidTestImplementation (libs.androidx.room.testing)
+
+
+    //Paging
+    val pagingVersion = "3.1.1"
+    implementation ("androidx.paging:paging-runtime:$pagingVersion")
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha19")
+
 }
